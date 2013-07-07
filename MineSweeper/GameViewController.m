@@ -30,9 +30,7 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    
     [self buildGameBoard];
-    
     [self newGameWithDifficulty: @"MEDIUM"];
 }
 
@@ -52,8 +50,7 @@
     allCellRows = [[NSMutableArray alloc] init];
     
     // create 4x4 grid here
-    
-    numberOfBombs = 4;
+    numberOfBombs = 6;
     
     NSMutableArray *currentRow = [[NSMutableArray alloc] init];
     
@@ -98,10 +95,6 @@
     gameBoard.frame = CGRectMake(100.0f, 175.0f, 123.0f, 123.0f); //make this dynamic based on board size
     //set gameboard background or border here
     [gameBoard.layer setBackgroundColor: [UIColor redColor].CGColor];
-    //[gameBoard sizeToFit];
-    
-    int boardWidth = [[allCellRows objectAtIndex:0] count];
-    int boardHeight = [allCellRows count];
 }
 
 - (void)cellTapped: (UIGestureRecognizer *)gestureRecognizer
@@ -119,7 +112,7 @@
     else
     {
         int bombCount = [self countNeighboringBombs:cell];
-//        cell.neighborBombCount = [NSString stringWithFormat:@"%i", [self countNeighboringBombs:cell]];
+        cell.neighborBombCount.text = [NSString stringWithFormat:@"%i", [self countNeighboringBombs:cell]];
         NSLog(@"neighbor bomb count = %i", bombCount);
     }
 }
@@ -135,13 +128,13 @@
     
     // loop through rows in range
     for (int i = [[neighborRange objectForKey:@"top"] integerValue];
-         i < [[neighborRange objectForKey:@"bottom"] integerValue];
+         i <= [[neighborRange objectForKey:@"bottom"] integerValue];
          i++) {
         NSMutableArray *currentRow = [allCellRows objectAtIndex:i];
         
         //loop through columns in row[i]
         for (int j = [[neighborRange objectForKey:@"left"] integerValue];
-             j < [[neighborRange objectForKey:@"right"] integerValue];
+             j <= [[neighborRange objectForKey:@"right"] integerValue];
              j++) {
             NSLog(@"checking cell at row:%i, col:%i", i, j);
             Cell *currentCell = ((Cell *)[currentRow objectAtIndex: j]);
@@ -149,7 +142,6 @@
                 NSLog(@"Bomb found!");
                 bombNumber++;
             }
-
         }
     }
     
@@ -168,19 +160,19 @@
     if (cell.addressX != 0 && cell.addressX != boardWidth) {
         [cellRange setObject:[NSNumber numberWithInt: cell.addressX - 1] forKey:@"left"];
         [cellRange setObject: [NSNumber numberWithInt: cell.addressX + 1] forKey:@"right"];
-        NSLog(@"cell is not edge. range is %i - %i", [[cellRange objectForKey:@"left"] integerValue], [[cellRange objectForKey:@"right"]integerValue]);
+//        NSLog(@"cell is not edge (left/right). range is %i - %i", [[cellRange objectForKey:@"left"] integerValue], [[cellRange objectForKey:@"right"]integerValue]);
     }
     else if(cell.addressX == 0) // if on left edge
     {
         [cellRange setObject:[NSNumber numberWithInt: 0] forKey:@"left"];
         [cellRange setObject: [NSNumber numberWithInt: cell.addressX + 1] forKey:@"right"];
-        NSLog(@"cell is on left edge. range is %i - %i", [[cellRange objectForKey:@"left"] integerValue], [[cellRange objectForKey:@"right"]integerValue]);
+//        NSLog(@"cell is on left edge. range is %i - %i", [[cellRange objectForKey:@"left"] integerValue], [[cellRange objectForKey:@"right"]integerValue]);
     }
     else // if on right edge
     {
         [cellRange setObject: [NSNumber numberWithInt: cell.addressX - 1] forKey:@"left"];
         [cellRange setObject: [NSNumber numberWithInt:boardWidth] forKey:@"right"];
-        NSLog(@"row is on right edge. range is %i - %i", [[cellRange objectForKey:@"left"] integerValue], [[cellRange objectForKey:@"right"]integerValue]);
+//        NSLog(@"row is on right edge. range is %i - %i", [[cellRange objectForKey:@"left"] integerValue], [[cellRange objectForKey:@"right"]integerValue]);
     }
     
     // set top and bottom edges if middle of board
@@ -188,16 +180,19 @@
     {
         [cellRange setObject: [NSNumber numberWithInt: cell.addressY -1] forKey:@"top"];
         [cellRange setObject: [NSNumber numberWithInt: cell.addressY + 1] forKey:@"bottom"];
+//        NSLog(@"cell is not edge (top/bottom). range is %i - %i", [[cellRange objectForKey:@"top"] integerValue], [[cellRange objectForKey:@"bottom"] integerValue]);
     }
     else if(cell.addressY == 0) // if top
     {
         [cellRange setObject: [NSNumber numberWithInt: 0] forKey:@"top"];
         [cellRange setObject: [NSNumber numberWithInt:cell.addressY + 1] forKey:@"bottom"];
+//        NSLog(@"cell is in top row. range is %i - %i", [[cellRange objectForKey:@"top"] integerValue], [[cellRange objectForKey:@"bottom"] integerValue]);
     }
     else // if bottom
     {
         [cellRange setObject: [NSNumber numberWithInt: cell.addressY - 1] forKey:@"top"];
         [cellRange setObject: [NSNumber numberWithInt: boardHeight] forKey:@"bottom"];
+//        NSLog(@"cell is in bottom row. range is %i - %i", [[cellRange objectForKey:@"top"] integerValue], [[cellRange objectForKey:@"bottom"] integerValue]);
     }
 
     return cellRange;
