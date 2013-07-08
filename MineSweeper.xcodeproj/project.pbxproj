@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		252D9C2F178B06E300A4C249 /* GameData.m in Sources */ = {isa = PBXBuildFile; fileRef = 252D9C2E178B06E300A4C249 /* GameData.m */; };
 		258AD9C417831D5000CEF47D /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 258AD9C317831D5000CEF47D /* UIKit.framework */; };
 		258AD9C617831D5000CEF47D /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 258AD9C517831D5000CEF47D /* Foundation.framework */; };
 		258AD9C817831D5000CEF47D /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 258AD9C717831D5000CEF47D /* CoreGraphics.framework */; };
@@ -24,6 +25,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		252D9C2D178B06E300A4C249 /* GameData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GameData.h; sourceTree = "<group>"; };
+		252D9C2E178B06E300A4C249 /* GameData.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GameData.m; sourceTree = "<group>"; };
 		258AD9C017831D5000CEF47D /* MineSweeper.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MineSweeper.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		258AD9C317831D5000CEF47D /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		258AD9C517831D5000CEF47D /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -99,10 +102,12 @@
 				258AD9DF17831D5000CEF47D /* ViewController.m */,
 				258AD9E6178338D300CEF47D /* GameViewController.h */,
 				258AD9E7178338D300CEF47D /* GameViewController.m */,
-				258AD9EC1783392200CEF47D /* Player.h */,
 				258AD9EF17837F6900CEF47D /* Cell.h */,
 				258AD9F017837F6900CEF47D /* Cell.m */,
+				258AD9EC1783392200CEF47D /* Player.h */,
 				258AD9ED1783392200CEF47D /* Player.m */,
+				252D9C2D178B06E300A4C249 /* GameData.h */,
+				252D9C2E178B06E300A4C249 /* GameData.m */,
 				258AD9CA17831D5000CEF47D /* Supporting Files */,
 			);
 			path = MineSweeper;
@@ -194,6 +199,7 @@
 				258AD9E8178338D300CEF47D /* GameViewController.m in Sources */,
 				258AD9EE1783392200CEF47D /* Player.m in Sources */,
 				258AD9F117837F6900CEF47D /* Cell.m in Sources */,
+				252D9C2F178B06E300A4C249 /* GameData.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -316,6 +322,7 @@
 				258AD9E517831D5000CEF47D /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

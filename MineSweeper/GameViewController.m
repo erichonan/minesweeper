@@ -9,6 +9,7 @@
 #import "GameViewController.h"
 #import "Cell.h"
 #import <QuartzCore/QuartzCore.h> //added for cell debugging (layer/border color)
+#include <stdlib.h>
 
 @interface GameViewController ()
 
@@ -50,8 +51,6 @@
     allCellRows = [[NSMutableArray alloc] init];
     
     // create 4x4 grid here
-    numberOfBombs = 6;
-    
     NSMutableArray *currentRow = [[NSMutableArray alloc] init];
     
     UIView *gameBoard = [[UIView alloc] init];
@@ -83,6 +82,9 @@
 
         UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(cellTapped:)];
         [cell addGestureRecognizer:tap];
+        
+        UILongPressGestureRecognizer *hold = [[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(cellHeld:)];
+        [cell addGestureRecognizer:hold];
 
         if ([currentRow count] == 4)
         {
@@ -95,31 +97,79 @@
     gameBoard.frame = CGRectMake(100.0f, 175.0f, 123.0f, 123.0f); //make this dynamic based on board size
     //set gameboard background or border here
     [gameBoard.layer setBackgroundColor: [UIColor redColor].CGColor];
+    
+    [self addBombs:allCellRows];
+}
+
+- (void)addBombs:(NSMutableArray *)allRows
+{
+    //NSMutableArray *cellsWithBombs = [[NSMutableArray alloc] init];
+    NSMutableArray *allCells = [[NSMutableArray alloc] init];
+
+    //loop over each row in allRows
+    for (int i = 0; i < [allRows count]; i++)
+    {
+        //loop over each cell in current row
+        for (int j = 0; j < [[allRows objectAtIndex:i] count]; j++) {
+            Cell *currentCell = [[allRows objectAtIndex:i] objectAtIndex:j];
+            [allCells addObject:currentCell];
+        }
+    }
+    
+    for (int i = 3; i > 0; i--)
+    {
+        //get random int
+        int r = arc4random() % [allCells count];
+        NSLog(@"r = %i", r);
+        Cell *bombCell = [allCells objectAtIndex: r];
+        bombCell.bomb = true;
+        [allCells removeObjectAtIndex:r]; //remove this cell so that it doesn't get added again
+    }
+
+    //add contents of allCellsArray to new temp array
+    
+    //randomly select cells from array and add bombs
 }
 
 - (void)cellTapped: (UIGestureRecognizer *)gestureRecognizer
 {
     NSLog(@"Cell Tapped");
-    //[sender checkCell];
     Cell *cell = (Cell *)gestureRecognizer.view;
-    [cell checkCell];
     
-    if(cell.bomb)
+    if(cell.flagged)
     {
-        NSLog(@"cell is a bomb");
-        //end game
+        //unflag it
+        NSLog(@"cell is flagged");
+        [cell flagCell];
     }
     else
     {
-        int bombCount = [self countNeighboringBombs:cell];
-        cell.neighborBombCount.text = [NSString stringWithFormat:@"%i", [self countNeighboringBombs:cell]];
-        NSLog(@"neighbor bomb count = %i", bombCount);
+        [cell checkCell];
+
+        if(cell.bomb)
+        {
+            NSLog(@"cell is a bomb");
+            //end game
+        }
+        else //cell is not a bomb
+        {
+            int bombCount = [self countNeighboringBombs:cell];
+            cell.neighborBombCount.text = [NSString stringWithFormat:@"%i", bombCount];
+        }
+    }
+}
+
+- (void)cellHeld: (UIGestureRecognizer *)gestureRecognizer
+{
+    if (gestureRecognizer.state == UIGestureRecognizerStateBegan) {
+        NSLog(@"cell held - flag it");
+        Cell *cell = (Cell *)gestureRecognizer.view;
+        [cell flagCell];
     }
 }
 
 - (int)countNeighboringBombs: (Cell*)cell
 {
-    NSLog(@"checking neighbors for bombs");
     int bombNumber = 0;
     //search for neighboring bombs
     
@@ -207,6 +257,13 @@
 - (void) gameOver
 {
     NSLog(@"Game Over");
+}
+
+- (IBAction)backButton:(id)sender {
+    //reset all existing vars
+    [timer invalidate];
+    NSLog(@"dismissing view controller");
+    [self dismissViewControllerAnimated:YES completion:nil];
 }
 
 @end

@@ -65,6 +65,7 @@
     
     if (bomb) {
         [self addSubview:bombView];
+        [neighborBombCount removeFromSuperview];
     }
     
     if (neighborBombCount > 0 && !bomb)

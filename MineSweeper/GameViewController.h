@@ -12,6 +12,8 @@
 
 @property (weak, nonatomic) IBOutlet UILabel *timerDisplay;
 @property (weak, nonatomic) IBOutlet UILabel *scoreDisplay;
+- (IBAction)backButton:(id)sender;
+
 @property NSTimer *timer;
 @property int score, currentTime, numberOfBombs;
 @property NSMutableArray *allCellRows;
