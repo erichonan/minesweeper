@@ -17,7 +17,7 @@
 
 @implementation GameViewController
 
-@synthesize timer, currentTime, score, timerDisplay, scoreDisplay, allCellRows, numberOfBombs;
+@synthesize timer, currentTime, score, timerDisplay, scoreDisplay, allCellRows, numberOfBombs, safeCellCount;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -30,6 +30,7 @@
 
 - (void)viewDidLoad
 {
+    NSLog(@"view did load");
     [super viewDidLoad];
     [self buildGameBoard];
     [self newGameWithDifficulty: @"MEDIUM"];
@@ -116,7 +117,8 @@
         }
     }
     
-    for (int i = 3; i > 0; i--)
+    numberOfBombs = 3;
+    for (int i = numberOfBombs; i > 0; i--)
     {
         //get random int
         int r = arc4random() % [allCells count];
@@ -133,13 +135,11 @@
 
 - (void)cellTapped: (UIGestureRecognizer *)gestureRecognizer
 {
-    NSLog(@"Cell Tapped");
     Cell *cell = (Cell *)gestureRecognizer.view;
     
     if(cell.flagged)
     {
-        //unflag it
-        NSLog(@"cell is flagged");
+        //unflag cell
         [cell flagCell];
     }
     else
@@ -149,15 +149,48 @@
         if(cell.bomb)
         {
             NSLog(@"cell is a bomb");
-            //end game
+            // when game is lost, display alert
+            
+            //create alert with 2 options (new game, return to home screen)
+            UIAlertView *gameOverAlert = [[UIAlertView alloc] initWithTitle:@"GAME OVER!" message:@"You tapped a bomb" delegate:self cancelButtonTitle:@"Back To Menu" otherButtonTitles:@"Play Again!", nil];
+            [gameOverAlert show];
         }
         else //cell is not a bomb
         {
             int bombCount = [self countNeighboringBombs:cell];
             cell.neighborBombCount.text = [NSString stringWithFormat:@"%i", bombCount];
+            safeCellCount++;
         }
     }
+    
+    //This checks to see if only bombs are remaining (in which case the game is won)
+    if(safeCellCount == (16 - numberOfBombs))
+    {
+        // when game is won, display high scores
+        NSLog(@"pushing highscores view");
+        [self performSegueWithIdentifier:@"highScoresSegue" sender:self];
+        
+    }
 }
+
+- (void) alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
+{
+    if (buttonIndex == 0)
+    {
+        // back to menu button clicked
+        NSLog(@"menu clicked");
+    }
+    else if (buttonIndex == 1)
+    {
+        NSLog(@"new game");
+        [timer invalidate];
+        [self buildGameBoard];
+        [self newGameWithDifficulty:@"MEDIUM"];
+        // play again button clicked
+    }
+}
+
+
 
 - (void)cellHeld: (UIGestureRecognizer *)gestureRecognizer
 {
@@ -171,7 +204,6 @@
 - (int)countNeighboringBombs: (Cell*)cell
 {
     int bombNumber = 0;
-    //search for neighboring bombs
     
     //check cells above
     NSMutableDictionary *neighborRange = [self getRange: cell];
@@ -182,7 +214,7 @@
          i++) {
         NSMutableArray *currentRow = [allCellRows objectAtIndex:i];
         
-        //loop through columns in row[i]
+        //loop through cells in column (row[i])
         for (int j = [[neighborRange objectForKey:@"left"] integerValue];
              j <= [[neighborRange objectForKey:@"right"] integerValue];
              j++) {
@@ -193,8 +225,7 @@
                 bombNumber++;
             }
         }
-    }
-    
+    }    
     return bombNumber;
 }
 

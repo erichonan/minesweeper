@@ -8,17 +8,17 @@
 
 #import <UIKit/UIKit.h>
 
-@interface GameViewController : UIViewController
+@interface GameViewController : UIViewController <UIAlertViewDelegate>
 
 @property (weak, nonatomic) IBOutlet UILabel *timerDisplay;
 @property (weak, nonatomic) IBOutlet UILabel *scoreDisplay;
 - (IBAction)backButton:(id)sender;
 
 @property NSTimer *timer;
-@property int score, currentTime, numberOfBombs;
+@property int score, currentTime, numberOfBombs, safeCellCount;
 @property NSMutableArray *allCellRows;
 
-- (void)cellTapped: (id)sender;
+- (void) cellTapped: (id)sender;
 - (void) newGameWithDifficulty: (NSString *)difficulty;
 - (void) buildGameBoard;
 - (void) gameOver;
