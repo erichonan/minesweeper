@@ -32,10 +32,9 @@
     NSLog(@"view did load");
     [super viewDidLoad];
     [self buildGameBoard];
-    [self newGameWithDifficulty: @"MEDIUM"];
+    [self newGameWithDifficulty: @"MEDIUM"]; //TO DO: Add difficulty functionality
     
     [[NSNotificationCenter defaultCenter ] addObserver:self selector:@selector(backToMenu) name:@"RETURN_TO_MENU" object:nil];
-    
 }
 
 - (void)didReceiveMemoryWarning
@@ -60,7 +59,7 @@
     UIView *gameBoard = [[UIView alloc] init];
     [self.view addSubview:gameBoard];
     
-    for(int i=0; i < 16; ++i) //replace 16 with constant
+    for(int i=0; i < 64; ++i) //replace 16 with constant
     {
         //Create Cell
         Cell *cell = [[Cell alloc] init];        
@@ -74,7 +73,7 @@
         [currentRow addObject:cell];
         [allCells addObject:cell];
 
-        cell.addressX = i % 4; // or i % sqrt numCells
+        cell.addressX = i % 8; // or i % sqrt numCells
         cell.addressY = [allCellRows count];
                 
         [gameBoard addSubview: cell];
@@ -85,7 +84,7 @@
         UILongPressGestureRecognizer *hold = [[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(cellHeld:)];
         [cell addGestureRecognizer:hold];
 
-        if ([currentRow count] == 4)
+        if ([currentRow count] == 8)
         {
             [allCellRows addObject:currentRow];
             currentRow = NULL;
@@ -93,7 +92,9 @@
         }
     }
     
-    gameBoard.frame = CGRectMake(100.0f, 175.0f, 123.0f, 123.0f); //make this dynamic based on board size
+    float width = 8 * 30 + 7;
+    float height = width;
+    gameBoard.frame = CGRectMake(40.0f, 110.0f, width, height); //make this dynamic based on board size
     //set gameboard background or border here
     [gameBoard.layer setBackgroundColor: [UIColor redColor].CGColor];
     
@@ -103,7 +104,7 @@
 - (void)addBombs:(NSMutableArray *)allRows
 {
     NSMutableArray *bombSelectArray = [allCells mutableCopy];
-    numberOfBombs = 3;
+    numberOfBombs = 10;
     for (int i = numberOfBombs; i > 0; i--)
     {
         //get random int
@@ -144,7 +145,7 @@
         }
     }
     
-    if(safeCellCount == (16 - numberOfBombs))     //This checks to see if only bombs are remaining (in which case the game is won)
+    if(safeCellCount == (64 - numberOfBombs))     //This checks to see if only bombs are remaining (in which case the game is won)
     {
         [self resetGame];
         [self performSegueWithIdentifier:@"highScoresSegue" sender:self]; // display high scores
@@ -189,13 +190,15 @@
         for (int j = [[neighborRange objectForKey:@"left"] integerValue];
              j <= [[neighborRange objectForKey:@"right"] integerValue];
              j++) {
-            NSLog(@"checking cell at row:%i, col:%i", i, j);
+
             Cell *currentCell = ((Cell *)[currentRow objectAtIndex: j]);
+            
             if(currentCell == cell)
             {
                 NSLog(@"This is the clicked cell address: x=%i - y=%i", currentCell.addressX, currentCell.addressY);
                 [neighborCells addObject:currentCell];
             }
+            
             if (currentCell.bomb) {
                 NSLog(@"Bomb found!");
                 bombNumber++;
@@ -215,6 +218,7 @@
             [self countNeighboringBombs:cell];
         }
     }*/
+    
     return bombNumber;
 }
 
@@ -270,9 +274,6 @@
 
 - (void) resetGame
 {
-    NSLog(@"reset game called");
-    
-    // remove all cells and graphics from game board
     [allCellRows removeAllObjects];
     
     for(int i = 0; i < [allCells count]; i++)
@@ -281,7 +282,7 @@
         [cell removeFromSuperview];
         cell = nil;
     }
-    NSLog(@"how many cells remaiin in allCells? %i", [allCells count]);
+
     [timer invalidate];
     timerDisplay.text = @"time: 0";
     currentTime = 0;

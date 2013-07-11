@@ -33,23 +33,13 @@
                                     <segue destination="XqS-Rc-kI4" kind="modal" id="cMf-A4-MHr"/>
                                 </connections>
                             </button>
-                            <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="sYP-Aa-VPl">
-                                <segments>
-                                    <segment title="Easy"/>
-                                    <segment title="Medium"/>
-                                    <segment title="Hard"/>
-                                </segments>
-                            </segmentedControl>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstItem="Zew-GU-pf6" firstAttribute="centerX" secondItem="NDz-QC-c1C" secondAttribute="centerX" type="default" id="Bk6-Q8-HnN"/>
                             <constraint firstItem="Zew-GU-pf6" firstAttribute="top" secondItem="3" secondAttribute="top" constant="34" id="HcT-Hy-FhL"/>
-                            <constraint firstItem="sYP-Aa-VPl" firstAttribute="leading" secondItem="3" secondAttribute="leading" constant="20" symbolic="YES" type="default" id="QgB-9A-4ij"/>
+                            <constraint firstItem="NDz-QC-c1C" firstAttribute="centerX" secondItem="3" secondAttribute="centerX" type="default" id="WK7-g0-9yJ"/>
                             <constraint firstItem="NDz-QC-c1C" firstAttribute="top" secondItem="3" secondAttribute="top" constant="146" id="aPy-AP-XBx"/>
-                            <constraint firstAttribute="trailing" secondItem="sYP-Aa-VPl" secondAttribute="trailing" constant="20" symbolic="YES" type="default" id="alg-Q6-QW0"/>
-                            <constraint firstItem="sYP-Aa-VPl" firstAttribute="centerX" secondItem="NDz-QC-c1C" secondAttribute="centerX" type="default" id="dIZ-xb-aoe"/>
-                            <constraint firstAttribute="bottom" secondItem="sYP-Aa-VPl" secondAttribute="bottom" constant="163" id="iDR-kc-UQ7"/>
                         </constraints>
                     </view>
                 </viewController>
@@ -83,13 +73,51 @@
                                     <action selector="backButton:" destination="XqS-Rc-kI4" eventType="touchUpInside" id="Egq-nW-Rhy"/>
                                 </connections>
                             </button>
+                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Tap square to reveal" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="blO-NZ-rVw">
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="21" id="TpE-RY-Pus"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="tap again to remove flag" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="I0m-mg-sna">
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="21" id="CBs-HE-w9M"/>
+                                    <constraint firstAttribute="width" constant="154" id="DiV-hB-Kjs"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Tap and hold to flag a square" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Lly-5Q-Nko">
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="21" id="6aZ-bZ-ofy"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="bombs: 10" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="HOi-RT-sBb">
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstAttribute="bottom" secondItem="PD8-42-Fml" secondAttribute="bottom" constant="48" id="3MW-h0-yKU"/>
-                            <constraint firstItem="j1e-Ie-cmD" firstAttribute="top" secondItem="FkI-dT-Hzk" secondAttribute="top" constant="63" id="J8X-a2-wG2"/>
-                            <constraint firstItem="j1e-Ie-cmD" firstAttribute="centerX" secondItem="FkI-dT-Hzk" secondAttribute="centerX" type="default" id="vOb-kk-DYq"/>
-                            <constraint firstItem="j1e-Ie-cmD" firstAttribute="centerX" secondItem="PD8-42-Fml" secondAttribute="centerX" type="default" id="w17-gE-kG9"/>
+                            <constraint firstAttribute="trailing" secondItem="HOi-RT-sBb" secondAttribute="trailing" constant="43" id="3lE-dv-1Pw"/>
+                            <constraint firstItem="PD8-42-Fml" firstAttribute="centerX" secondItem="I0m-mg-sna" secondAttribute="centerX" type="default" id="BuO-Uu-3Ik"/>
+                            <constraint firstItem="Lly-5Q-Nko" firstAttribute="centerX" secondItem="blO-NZ-rVw" secondAttribute="centerX" type="default" id="F0O-R5-NRu"/>
+                            <constraint firstItem="PD8-42-Fml" firstAttribute="centerX" secondItem="FkI-dT-Hzk" secondAttribute="centerX" type="default" id="Lpq-JX-wI2"/>
+                            <constraint firstItem="I0m-mg-sna" firstAttribute="top" secondItem="FkI-dT-Hzk" secondAttribute="top" constant="49" id="VdG-bH-X2w"/>
+                            <constraint firstItem="blO-NZ-rVw" firstAttribute="top" secondItem="FkI-dT-Hzk" secondAttribute="top" constant="14" id="bpu-oM-Zsy"/>
+                            <constraint firstItem="j1e-Ie-cmD" firstAttribute="leading" secondItem="FkI-dT-Hzk" secondAttribute="leading" constant="46" id="c7s-Qg-c0c"/>
+                            <constraint firstItem="HOi-RT-sBb" firstAttribute="baseline" secondItem="j1e-Ie-cmD" secondAttribute="baseline" type="default" id="eSr-tp-LBC"/>
+                            <constraint firstItem="j1e-Ie-cmD" firstAttribute="top" secondItem="I0m-mg-sna" secondAttribute="bottom" constant="8" symbolic="YES" type="default" id="gpA-1G-Yt7"/>
+                            <constraint firstItem="I0m-mg-sna" firstAttribute="centerX" secondItem="Lly-5Q-Nko" secondAttribute="centerX" type="default" id="x37-j2-P0Y"/>
+                            <constraint firstItem="Lly-5Q-Nko" firstAttribute="top" secondItem="FkI-dT-Hzk" secondAttribute="top" constant="31" id="yvC-aZ-Ta7"/>
                         </constraints>
                     </view>
                     <connections>
@@ -169,7 +197,6 @@
             <source key="sourceIdentifier" type="project" relativePath="./Classes/GameViewController.h"/>
             <relationships>
                 <relationship kind="action" name="backButton:"/>
-                <relationship kind="outlet" name="scoreDisplay" candidateClass="UILabel"/>
                 <relationship kind="outlet" name="timerDisplay" candidateClass="UILabel"/>
             </relationships>
         </class>

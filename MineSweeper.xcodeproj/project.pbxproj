@@ -7,7 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		252D9C2F178B06E300A4C249 /* GameData.m in Sources */ = {isa = PBXBuildFile; fileRef = 252D9C2E178B06E300A4C249 /* GameData.m */; };
 		252D9C32178D001400A4C249 /* HighScoresViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 252D9C31178D001400A4C249 /* HighScoresViewController.m */; };
 		258AD9C417831D5000CEF47D /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 258AD9C317831D5000CEF47D /* UIKit.framework */; };
 		258AD9C617831D5000CEF47D /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 258AD9C517831D5000CEF47D /* Foundation.framework */; };
@@ -21,13 +20,10 @@
 		258AD9DD17831D5000CEF47D /* MainStoryboard.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 258AD9DB17831D5000CEF47D /* MainStoryboard.storyboard */; };
 		258AD9E017831D5000CEF47D /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 258AD9DF17831D5000CEF47D /* ViewController.m */; };
 		258AD9E8178338D300CEF47D /* GameViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 258AD9E7178338D300CEF47D /* GameViewController.m */; };
-		258AD9EE1783392200CEF47D /* Player.m in Sources */ = {isa = PBXBuildFile; fileRef = 258AD9ED1783392200CEF47D /* Player.m */; };
 		258AD9F117837F6900CEF47D /* Cell.m in Sources */ = {isa = PBXBuildFile; fileRef = 258AD9F017837F6900CEF47D /* Cell.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		252D9C2D178B06E300A4C249 /* GameData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GameData.h; sourceTree = "<group>"; };
-		252D9C2E178B06E300A4C249 /* GameData.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GameData.m; sourceTree = "<group>"; };
 		252D9C30178D001400A4C249 /* HighScoresViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HighScoresViewController.h; sourceTree = "<group>"; };
 		252D9C31178D001400A4C249 /* HighScoresViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HighScoresViewController.m; sourceTree = "<group>"; };
 		258AD9C017831D5000CEF47D /* MineSweeper.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MineSweeper.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -48,8 +44,6 @@
 		258AD9DF17831D5000CEF47D /* ViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ViewController.m; sourceTree = "<group>"; };
 		258AD9E6178338D300CEF47D /* GameViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GameViewController.h; sourceTree = "<group>"; };
 		258AD9E7178338D300CEF47D /* GameViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GameViewController.m; sourceTree = "<group>"; };
-		258AD9EC1783392200CEF47D /* Player.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Player.h; sourceTree = "<group>"; };
-		258AD9ED1783392200CEF47D /* Player.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Player.m; sourceTree = "<group>"; };
 		258AD9EF17837F6900CEF47D /* Cell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Cell.h; sourceTree = "<group>"; };
 		258AD9F017837F6900CEF47D /* Cell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Cell.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -109,10 +103,6 @@
 				252D9C31178D001400A4C249 /* HighScoresViewController.m */,
 				258AD9EF17837F6900CEF47D /* Cell.h */,
 				258AD9F017837F6900CEF47D /* Cell.m */,
-				258AD9EC1783392200CEF47D /* Player.h */,
-				258AD9ED1783392200CEF47D /* Player.m */,
-				252D9C2D178B06E300A4C249 /* GameData.h */,
-				252D9C2E178B06E300A4C249 /* GameData.m */,
 				258AD9CA17831D5000CEF47D /* Supporting Files */,
 			);
 			path = MineSweeper;
@@ -202,9 +192,7 @@
 				258AD9D417831D5000CEF47D /* AppDelegate.m in Sources */,
 				258AD9E017831D5000CEF47D /* ViewController.m in Sources */,
 				258AD9E8178338D300CEF47D /* GameViewController.m in Sources */,
-				258AD9EE1783392200CEF47D /* Player.m in Sources */,
 				258AD9F117837F6900CEF47D /* Cell.m in Sources */,
-				252D9C2F178B06E300A4C249 /* GameData.m in Sources */,
 				252D9C32178D001400A4C249 /* HighScoresViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
