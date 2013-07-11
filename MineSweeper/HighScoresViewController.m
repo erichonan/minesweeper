@@ -27,6 +27,8 @@
 {
     [super viewDidLoad];
 	// Do any additional setup after loading the view.
+    
+    //request top 20 highscores
 }
 
 - (void)didReceiveMemoryWarning
@@ -37,10 +39,13 @@
 
 - (IBAction)playAgain:(id)sender {
     NSLog(@"Play Again Tapped");
-    [self removeFromParentViewController];
+    [self dismissViewControllerAnimated:YES completion:nil];
 }
 
 - (IBAction)backToMenu:(id)sender {
     NSLog(@"back to menu");
+    //[self dismissViewControllerAnimated:YES completion:nil];
+    NSNotification *notification =[NSNotification notificationWithName:@"RETURN_TO_MENU" object:nil];
+    [[NSNotificationCenter defaultCenter] postNotification: notification];
 }
 @end

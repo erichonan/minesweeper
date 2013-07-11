@@ -70,11 +70,6 @@
                                 <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="score" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="amv-R2-uB1">
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
-                                <nil key="highlightedColor"/>
-                            </label>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="PD8-42-Fml">
                                 <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
                                 <state key="normal" title="end game">
@@ -93,14 +88,11 @@
                         <constraints>
                             <constraint firstAttribute="bottom" secondItem="PD8-42-Fml" secondAttribute="bottom" constant="48" id="3MW-h0-yKU"/>
                             <constraint firstItem="j1e-Ie-cmD" firstAttribute="top" secondItem="FkI-dT-Hzk" secondAttribute="top" constant="63" id="J8X-a2-wG2"/>
-                            <constraint firstItem="amv-R2-uB1" firstAttribute="leading" secondItem="j1e-Ie-cmD" secondAttribute="leading" type="default" id="JfJ-q0-nHb"/>
-                            <constraint firstItem="amv-R2-uB1" firstAttribute="top" secondItem="FkI-dT-Hzk" secondAttribute="top" constant="105" id="b7t-CU-Zy8"/>
                             <constraint firstItem="j1e-Ie-cmD" firstAttribute="centerX" secondItem="FkI-dT-Hzk" secondAttribute="centerX" type="default" id="vOb-kk-DYq"/>
                             <constraint firstItem="j1e-Ie-cmD" firstAttribute="centerX" secondItem="PD8-42-Fml" secondAttribute="centerX" type="default" id="w17-gE-kG9"/>
                         </constraints>
                     </view>
                     <connections>
-                        <outlet property="scoreDisplay" destination="amv-R2-uB1" id="vNd-Ye-SM7"/>
                         <outlet property="timerDisplay" destination="j1e-Ie-cmD" id="jOb-TX-p4u"/>
                         <segue destination="SBb-aq-CRD" kind="modal" identifier="highScoresSegue" id="oy4-oK-GTy"/>
                     </connections>
@@ -148,14 +140,21 @@
                                     <action selector="backToMenu:" destination="SBb-aq-CRD" eventType="touchUpInside" id="FVM-6q-4Pd"/>
                                 </connections>
                             </button>
+                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Fastest Times" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="N9Z-Se-r3c">
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                         <constraints>
+                            <constraint firstItem="N9Z-Se-r3c" firstAttribute="centerX" secondItem="T8r-AT-TqX" secondAttribute="centerX" type="default" id="5Dh-ux-0mI"/>
+                            <constraint firstItem="N9Z-Se-r3c" firstAttribute="centerX" secondItem="L4Q-FD-qob" secondAttribute="centerX" type="default" id="KdI-lA-4kC"/>
                             <constraint firstItem="NXr-mf-HiI" firstAttribute="centerX" secondItem="L4Q-FD-qob" secondAttribute="centerX" type="default" id="Olx-jF-PUG"/>
-                            <constraint firstItem="L4Q-FD-qob" firstAttribute="centerX" secondItem="xDl-ql-5DB" secondAttribute="centerX" type="default" id="RFk-om-yud"/>
-                            <constraint firstItem="NXr-mf-HiI" firstAttribute="centerX" secondItem="T8r-AT-TqX" secondAttribute="centerX" type="default" id="YLI-Cw-CYw"/>
                             <constraint firstAttribute="bottom" secondItem="L4Q-FD-qob" secondAttribute="bottom" constant="115" id="Ynm-l9-nrW"/>
+                            <constraint firstItem="N9Z-Se-r3c" firstAttribute="top" secondItem="T8r-AT-TqX" secondAttribute="top" constant="76" id="hsh-6h-iRd"/>
                             <constraint firstAttribute="bottom" secondItem="NXr-mf-HiI" secondAttribute="bottom" constant="49" id="kWz-gl-1Wf"/>
+                            <constraint firstItem="N9Z-Se-r3c" firstAttribute="centerX" secondItem="xDl-ql-5DB" secondAttribute="centerX" type="default" id="tbL-5m-R5c"/>
                             <constraint firstItem="xDl-ql-5DB" firstAttribute="top" secondItem="T8r-AT-TqX" secondAttribute="top" constant="20" symbolic="YES" type="default" id="y40-8m-zcS"/>
                         </constraints>
                     </view>

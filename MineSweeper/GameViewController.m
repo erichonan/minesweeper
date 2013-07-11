@@ -7,7 +7,6 @@
 //
 
 #import "GameViewController.h"
-#import "Cell.h"
 #import <QuartzCore/QuartzCore.h> //added for cell debugging (layer/border color)
 #include <stdlib.h>
 
@@ -17,7 +16,7 @@
 
 @implementation GameViewController
 
-@synthesize timer, currentTime, score, timerDisplay, scoreDisplay, allCellRows, numberOfBombs, safeCellCount;
+@synthesize timer, currentTime, timerDisplay, allCellRows, allCells, numberOfBombs, safeCellCount;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -34,6 +33,9 @@
     [super viewDidLoad];
     [self buildGameBoard];
     [self newGameWithDifficulty: @"MEDIUM"];
+    
+    [[NSNotificationCenter defaultCenter ] addObserver:self selector:@selector(backToMenu) name:@"RETURN_TO_MENU" object:nil];
+    
 }
 
 - (void)didReceiveMemoryWarning
@@ -53,6 +55,7 @@
     
     // create 4x4 grid here
     NSMutableArray *currentRow = [[NSMutableArray alloc] init];
+    allCells = [[NSMutableArray alloc] init];
     
     UIView *gameBoard = [[UIView alloc] init];
     [self.view addSubview:gameBoard];
@@ -69,12 +72,7 @@
         [cell setFrame: r];
         
         [currentRow addObject:cell];
-        
-        if(i < numberOfBombs) //randomize this
-        {
-            //set current cell to bomb
-            cell.bomb = true;
-        }
+        [allCells addObject:cell];
 
         cell.addressX = i % 4; // or i % sqrt numCells
         cell.addressY = [allCellRows count];
@@ -104,33 +102,18 @@
 
 - (void)addBombs:(NSMutableArray *)allRows
 {
-    //NSMutableArray *cellsWithBombs = [[NSMutableArray alloc] init];
-    NSMutableArray *allCells = [[NSMutableArray alloc] init];
-
-    //loop over each row in allRows
-    for (int i = 0; i < [allRows count]; i++)
-    {
-        //loop over each cell in current row
-        for (int j = 0; j < [[allRows objectAtIndex:i] count]; j++) {
-            Cell *currentCell = [[allRows objectAtIndex:i] objectAtIndex:j];
-            [allCells addObject:currentCell];
-        }
-    }
-    
+    NSMutableArray *bombSelectArray = [allCells mutableCopy];
     numberOfBombs = 3;
     for (int i = numberOfBombs; i > 0; i--)
     {
         //get random int
-        int r = arc4random() % [allCells count];
+        NSLog(@"adding bomb");
+        int r = arc4random() % [bombSelectArray count];
         NSLog(@"r = %i", r);
         Cell *bombCell = [allCells objectAtIndex: r];
         bombCell.bomb = true;
-        [allCells removeObjectAtIndex:r]; //remove this cell so that it doesn't get added again
+        [bombSelectArray removeObjectAtIndex:r]; //remove this cell so that it doesn't get added again
     }
-
-    //add contents of allCellsArray to new temp array
-    
-    //randomly select cells from array and add bombs
 }
 
 - (void)cellTapped: (UIGestureRecognizer *)gestureRecognizer
@@ -139,8 +122,7 @@
     
     if(cell.flagged)
     {
-        //unflag cell
-        [cell flagCell];
+        [cell flagCell]; //unflag cell
     }
     else
     {
@@ -148,7 +130,6 @@
 
         if(cell.bomb)
         {
-            NSLog(@"cell is a bomb");
             // when game is lost, display alert
             
             //create alert with 2 options (new game, return to home screen)
@@ -163,39 +144,28 @@
         }
     }
     
-    //This checks to see if only bombs are remaining (in which case the game is won)
-    if(safeCellCount == (16 - numberOfBombs))
+    if(safeCellCount == (16 - numberOfBombs))     //This checks to see if only bombs are remaining (in which case the game is won)
     {
-        // when game is won, display high scores
-        NSLog(@"pushing highscores view");
-        [self performSegueWithIdentifier:@"highScoresSegue" sender:self];
-        
+        [self resetGame];
+        [self performSegueWithIdentifier:@"highScoresSegue" sender:self]; // display high scores
     }
 }
 
 - (void) alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
 {
-    if (buttonIndex == 0)
+    if (buttonIndex == 0) // back to menu
     {
-        // back to menu button clicked
-        NSLog(@"menu clicked");
+        [self dismissViewControllerAnimated:YES completion:nil];
     }
-    else if (buttonIndex == 1)
+    else if (buttonIndex == 1) // play again
     {
-        NSLog(@"new game");
-        [timer invalidate];
-        [self buildGameBoard];
-        [self newGameWithDifficulty:@"MEDIUM"];
-        // play again button clicked
+        [self resetGame];
     }
 }
-
-
 
 - (void)cellHeld: (UIGestureRecognizer *)gestureRecognizer
 {
     if (gestureRecognizer.state == UIGestureRecognizerStateBegan) {
-        NSLog(@"cell held - flag it");
         Cell *cell = (Cell *)gestureRecognizer.view;
         [cell flagCell];
     }
@@ -207,6 +177,7 @@
     
     //check cells above
     NSMutableDictionary *neighborRange = [self getRange: cell];
+    NSMutableArray *neighborCells = [[NSMutableArray alloc] init];
     
     // loop through rows in range
     for (int i = [[neighborRange objectForKey:@"top"] integerValue];
@@ -220,12 +191,30 @@
              j++) {
             NSLog(@"checking cell at row:%i, col:%i", i, j);
             Cell *currentCell = ((Cell *)[currentRow objectAtIndex: j]);
+            if(currentCell == cell)
+            {
+                NSLog(@"This is the clicked cell address: x=%i - y=%i", currentCell.addressX, currentCell.addressY);
+                [neighborCells addObject:currentCell];
+            }
             if (currentCell.bomb) {
                 NSLog(@"Bomb found!");
                 bombNumber++;
             }
         }
-    }    
+    }
+    
+    // The problem here is that the cell with 0 bombs gets checked again and again
+    /*
+    if(bombNumber == 0)
+    {
+        NSLog(@"No neighboring bombs - need to check all neighbors");
+        for (int k = 0; k < [neighborCells count]; k++) {
+            NSLog(@"checking neighboring cell (recursive): k = %i", k);
+            Cell *cell = [neighborCells objectAtIndex:k];
+            [cell checkCell];
+            [self countNeighboringBombs:cell];
+        }
+    }*/
     return bombNumber;
 }
 
@@ -241,19 +230,16 @@
     if (cell.addressX != 0 && cell.addressX != boardWidth) {
         [cellRange setObject:[NSNumber numberWithInt: cell.addressX - 1] forKey:@"left"];
         [cellRange setObject: [NSNumber numberWithInt: cell.addressX + 1] forKey:@"right"];
-//        NSLog(@"cell is not edge (left/right). range is %i - %i", [[cellRange objectForKey:@"left"] integerValue], [[cellRange objectForKey:@"right"]integerValue]);
     }
     else if(cell.addressX == 0) // if on left edge
     {
         [cellRange setObject:[NSNumber numberWithInt: 0] forKey:@"left"];
         [cellRange setObject: [NSNumber numberWithInt: cell.addressX + 1] forKey:@"right"];
-//        NSLog(@"cell is on left edge. range is %i - %i", [[cellRange objectForKey:@"left"] integerValue], [[cellRange objectForKey:@"right"]integerValue]);
     }
     else // if on right edge
     {
         [cellRange setObject: [NSNumber numberWithInt: cell.addressX - 1] forKey:@"left"];
         [cellRange setObject: [NSNumber numberWithInt:boardWidth] forKey:@"right"];
-//        NSLog(@"row is on right edge. range is %i - %i", [[cellRange objectForKey:@"left"] integerValue], [[cellRange objectForKey:@"right"]integerValue]);
     }
     
     // set top and bottom edges if middle of board
@@ -261,19 +247,16 @@
     {
         [cellRange setObject: [NSNumber numberWithInt: cell.addressY -1] forKey:@"top"];
         [cellRange setObject: [NSNumber numberWithInt: cell.addressY + 1] forKey:@"bottom"];
-//        NSLog(@"cell is not edge (top/bottom). range is %i - %i", [[cellRange objectForKey:@"top"] integerValue], [[cellRange objectForKey:@"bottom"] integerValue]);
     }
     else if(cell.addressY == 0) // if top
     {
         [cellRange setObject: [NSNumber numberWithInt: 0] forKey:@"top"];
         [cellRange setObject: [NSNumber numberWithInt:cell.addressY + 1] forKey:@"bottom"];
-//        NSLog(@"cell is in top row. range is %i - %i", [[cellRange objectForKey:@"top"] integerValue], [[cellRange objectForKey:@"bottom"] integerValue]);
     }
     else // if bottom
     {
         [cellRange setObject: [NSNumber numberWithInt: cell.addressY - 1] forKey:@"top"];
         [cellRange setObject: [NSNumber numberWithInt: boardHeight] forKey:@"bottom"];
-//        NSLog(@"cell is in bottom row. range is %i - %i", [[cellRange objectForKey:@"top"] integerValue], [[cellRange objectForKey:@"bottom"] integerValue]);
     }
 
     return cellRange;
@@ -285,15 +268,36 @@
     timerDisplay.text = [NSString stringWithFormat:@"time: %i", currentTime];
 }
 
-- (void) gameOver
+- (void) resetGame
 {
-    NSLog(@"Game Over");
+    NSLog(@"reset game called");
+    
+    // remove all cells and graphics from game board
+    [allCellRows removeAllObjects];
+    
+    for(int i = 0; i < [allCells count]; i++)
+    {
+        Cell *cell = [allCells objectAtIndex:i];
+        [cell removeFromSuperview];
+        cell = nil;
+    }
+    NSLog(@"how many cells remaiin in allCells? %i", [allCells count]);
+    [timer invalidate];
+    timerDisplay.text = @"time: 0";
+    currentTime = 0;
+    numberOfBombs = 0;
+    safeCellCount = 0;
+
+    [self buildGameBoard];
+    [self newGameWithDifficulty:@"MEDIUM"];
 }
 
 - (IBAction)backButton:(id)sender {
-    //reset all existing vars
-    [timer invalidate];
-    NSLog(@"dismissing view controller");
+    [self backToMenu];
+}
+
+- (void)backToMenu
+{
     [self dismissViewControllerAnimated:YES completion:nil];
 }
 

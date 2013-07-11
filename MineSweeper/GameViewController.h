@@ -7,20 +7,20 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "Cell.h"
 
 @interface GameViewController : UIViewController <UIAlertViewDelegate>
 
 @property (weak, nonatomic) IBOutlet UILabel *timerDisplay;
-@property (weak, nonatomic) IBOutlet UILabel *scoreDisplay;
 - (IBAction)backButton:(id)sender;
 
 @property NSTimer *timer;
-@property int score, currentTime, numberOfBombs, safeCellCount;
-@property NSMutableArray *allCellRows;
+@property int currentTime, numberOfBombs, safeCellCount;
+@property NSMutableArray *allCellRows, *allCells;
 
+- (NSMutableDictionary *) getRange:(Cell *)cell;
 - (void) cellTapped: (id)sender;
 - (void) newGameWithDifficulty: (NSString *)difficulty;
 - (void) buildGameBoard;
-- (void) gameOver;
-
+- (void) resetGame;
 @end
