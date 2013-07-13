@@ -7,6 +7,7 @@
 //
 
 #import "HighScoresViewController.h"
+#import "AFNetworking.h"
 
 @interface HighScoresViewController ()
 
@@ -26,9 +27,7 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-	// Do any additional setup after loading the view.
-    
-    //request top 20 highscores
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(addHighScore:) name:@"HIGHSCORE" object:nil];
 }
 
 - (void)didReceiveMemoryWarning
@@ -48,4 +47,36 @@
     NSNotification *notification =[NSNotification notificationWithName:@"RETURN_TO_MENU" object:nil];
     [[NSNotificationCenter defaultCenter] postNotification: notification];
 }
+
+-(void)addHighScore:(NSNotification *)notification
+{
+    NSLog(@"notification: %@", [notification object]);
+    
+    NSString *username = @"Anonymous";
+    
+    //connect to database and add time here
+    
+    //hardcode username to begin with
+    
+    NSURL *baseurl = [NSURL URLWithString:@"http://fair-jigsaw-266.appspot.com"];
+    
+    AFHTTPClient *httpClient = [[AFHTTPClient alloc] initWithBaseURL:baseurl];
+    [httpClient registerHTTPOperationClass:[AFJSONRequestOperation class]];
+    [httpClient setDefaultHeader:@"Accept" value:@"application/json"];
+    
+    NSDictionary *params = [NSDictionary dictionaryWithObjectsAndKeys:
+                            username, @"username",
+                            [notification object], @"time",
+                            nil];
+    
+    NSLog(@"params: %@", params);
+    
+//    NSMutableURLRequest *request = [httpClient requestWithMethod:@"POST" path:@"/" parameters:params];
+    
+//    [operation start];
+//    [operation waitUntilFinished];
+
+}
+
+
 @end

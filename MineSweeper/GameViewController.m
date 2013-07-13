@@ -45,7 +45,7 @@
 
 - (void) newGameWithDifficulty: (NSString *)difficulty
 {
-    timer = [NSTimer scheduledTimerWithTimeInterval:1.0f target:self selector:@selector(timerTick) userInfo:nil repeats:YES];
+    timer = [NSTimer scheduledTimerWithTimeInterval:.01f target:self selector:@selector(timerTick) userInfo:nil repeats:YES];
 }
 
 - (void)buildGameBoard
@@ -147,9 +147,19 @@
     
     if(safeCellCount == (64 - numberOfBombs))     //This checks to see if only bombs are remaining (in which case the game is won)
     {
-        [self resetGame];
-        [self performSegueWithIdentifier:@"highScoresSegue" sender:self]; // display high scores
+        [self winGame];
     }
+}
+
+- (void) winGame
+{
+    [self performSegueWithIdentifier:@"highScoresSegue" sender:self]; // display high scores
+    //now pass along a notification
+    NSNotification *newHighScore = [NSNotification notificationWithName:@"HIGHSCORE" object:timerDisplay.text];
+    [[NSNotificationCenter defaultCenter] postNotification:newHighScore];
+    
+    
+    [self resetGame];
 }
 
 - (void) alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
@@ -222,6 +232,14 @@
     return bombNumber;
 }
 
+- (IBAction)winGameButton:(id)sender {
+    [self performSegueWithIdentifier:@"highScoresSegue" sender:self]; // display high scores
+    //now pass along a notification
+    NSNotification *newHighScore = [NSNotification notificationWithName:@"HIGHSCORE" object:timerDisplay.text];
+    [[NSNotificationCenter defaultCenter] postNotification:newHighScore];
+    [self winGame];
+}
+
 - (NSMutableDictionary *) getRange:(Cell *)cell
 {
     int boardWidth = [[allCellRows objectAtIndex:0] count] - 1;
@@ -269,7 +287,7 @@
 - (void) timerTick
 {
     currentTime++;
-    timerDisplay.text = [NSString stringWithFormat:@"time: %i", currentTime];
+    timerDisplay.text = [NSString stringWithFormat:@"time: %.2f", (float)currentTime / 100];
 }
 
 - (void) resetGame
@@ -299,7 +317,9 @@
 
 - (void)backToMenu
 {
+    NSLog(@"going back to menu");
     [self dismissViewControllerAnimated:YES completion:nil];
+    //[self removeFromParentViewController];
 }
 
 @end

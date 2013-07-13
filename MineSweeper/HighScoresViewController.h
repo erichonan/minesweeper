@@ -12,4 +12,6 @@
 - (IBAction)playAgain:(id)sender;
 - (IBAction)backToMenu:(id)sender;
 
+@property (weak, nonatomic) IBOutlet UITextView *highscoresText;
+
 @end

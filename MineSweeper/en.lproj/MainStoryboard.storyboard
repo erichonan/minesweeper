@@ -103,19 +103,34 @@
                                 <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="kFF-uF-gH6">
+                                <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
+                                <state key="normal" title="win game">
+                                    <color key="titleColor" red="0.19607843459999999" green="0.30980393290000002" blue="0.52156865600000002" alpha="1" colorSpace="calibratedRGB"/>
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <state key="highlighted">
+                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="winGameButton:" destination="XqS-Rc-kI4" eventType="touchUpInside" id="WIr-v1-qvg"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstAttribute="bottom" secondItem="PD8-42-Fml" secondAttribute="bottom" constant="48" id="3MW-h0-yKU"/>
                             <constraint firstAttribute="trailing" secondItem="HOi-RT-sBb" secondAttribute="trailing" constant="43" id="3lE-dv-1Pw"/>
-                            <constraint firstItem="PD8-42-Fml" firstAttribute="centerX" secondItem="I0m-mg-sna" secondAttribute="centerX" type="default" id="BuO-Uu-3Ik"/>
+                            <constraint firstAttribute="bottom" secondItem="kFF-uF-gH6" secondAttribute="bottom" constant="20" symbolic="YES" type="default" id="8qO-eb-gYt"/>
+                            <constraint firstItem="I0m-mg-sna" firstAttribute="centerX" secondItem="FkI-dT-Hzk" secondAttribute="centerX" type="default" id="EH8-KZ-6yh"/>
                             <constraint firstItem="Lly-5Q-Nko" firstAttribute="centerX" secondItem="blO-NZ-rVw" secondAttribute="centerX" type="default" id="F0O-R5-NRu"/>
-                            <constraint firstItem="PD8-42-Fml" firstAttribute="centerX" secondItem="FkI-dT-Hzk" secondAttribute="centerX" type="default" id="Lpq-JX-wI2"/>
+                            <constraint firstAttribute="trailing" secondItem="kFF-uF-gH6" secondAttribute="trailing" constant="20" symbolic="YES" type="default" id="P2Y-g9-gfz"/>
                             <constraint firstItem="I0m-mg-sna" firstAttribute="top" secondItem="FkI-dT-Hzk" secondAttribute="top" constant="49" id="VdG-bH-X2w"/>
+                            <constraint firstItem="PD8-42-Fml" firstAttribute="leading" secondItem="FkI-dT-Hzk" secondAttribute="leading" constant="20" symbolic="YES" type="default" id="b3G-NN-XOh"/>
                             <constraint firstItem="blO-NZ-rVw" firstAttribute="top" secondItem="FkI-dT-Hzk" secondAttribute="top" constant="14" id="bpu-oM-Zsy"/>
                             <constraint firstItem="j1e-Ie-cmD" firstAttribute="leading" secondItem="FkI-dT-Hzk" secondAttribute="leading" constant="46" id="c7s-Qg-c0c"/>
                             <constraint firstItem="HOi-RT-sBb" firstAttribute="baseline" secondItem="j1e-Ie-cmD" secondAttribute="baseline" type="default" id="eSr-tp-LBC"/>
                             <constraint firstItem="j1e-Ie-cmD" firstAttribute="top" secondItem="I0m-mg-sna" secondAttribute="bottom" constant="8" symbolic="YES" type="default" id="gpA-1G-Yt7"/>
+                            <constraint firstAttribute="bottom" secondItem="PD8-42-Fml" secondAttribute="bottom" constant="20" symbolic="YES" type="default" id="wKY-50-2Zu"/>
                             <constraint firstItem="I0m-mg-sna" firstAttribute="centerX" secondItem="Lly-5Q-Nko" secondAttribute="centerX" type="default" id="x37-j2-P0Y"/>
                             <constraint firstItem="Lly-5Q-Nko" firstAttribute="top" secondItem="FkI-dT-Hzk" secondAttribute="top" constant="31" id="yvC-aZ-Ta7"/>
                         </constraints>
@@ -127,7 +142,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Sxa-Yu-Qa6" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="550" y="137"/>
+            <point key="canvasLocation" x="515" y="137"/>
         </scene>
         <!--High Scores View Controller-->
         <scene sceneID="h4v-Ig-zeP">
@@ -173,23 +188,38 @@
                                 <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="LHd-RB-0Jw">
+                                <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="258" id="b65-zF-sO9"/>
+                                </constraints>
+                                <string key="text">Lorem ipsum dolor sit er elit lamet, consectetaur cillium adipisicing pecu, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Nam liber te conscient to factor tum poen legum odioque civiuda.</string>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                            </textView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstItem="N9Z-Se-r3c" firstAttribute="centerX" secondItem="T8r-AT-TqX" secondAttribute="centerX" type="default" id="5Dh-ux-0mI"/>
-                            <constraint firstItem="N9Z-Se-r3c" firstAttribute="centerX" secondItem="L4Q-FD-qob" secondAttribute="centerX" type="default" id="KdI-lA-4kC"/>
+                            <constraint firstAttribute="bottom" secondItem="NXr-mf-HiI" secondAttribute="bottom" constant="18" id="8vS-p7-Hsu"/>
+                            <constraint firstAttribute="trailing" secondItem="LHd-RB-0Jw" secondAttribute="trailing" constant="20" symbolic="YES" type="default" id="9Mj-TB-Qfm"/>
+                            <constraint firstItem="LHd-RB-0Jw" firstAttribute="top" secondItem="N9Z-Se-r3c" secondAttribute="bottom" constant="8" symbolic="YES" type="default" id="BRf-mz-1mp"/>
+                            <constraint firstItem="LHd-RB-0Jw" firstAttribute="leading" secondItem="T8r-AT-TqX" secondAttribute="leading" constant="20" symbolic="YES" type="default" id="G6m-gA-Yga"/>
+                            <constraint firstAttribute="bottom" secondItem="L4Q-FD-qob" secondAttribute="bottom" constant="84" id="GtW-He-aOO"/>
                             <constraint firstItem="NXr-mf-HiI" firstAttribute="centerX" secondItem="L4Q-FD-qob" secondAttribute="centerX" type="default" id="Olx-jF-PUG"/>
-                            <constraint firstAttribute="bottom" secondItem="L4Q-FD-qob" secondAttribute="bottom" constant="115" id="Ynm-l9-nrW"/>
-                            <constraint firstItem="N9Z-Se-r3c" firstAttribute="top" secondItem="T8r-AT-TqX" secondAttribute="top" constant="76" id="hsh-6h-iRd"/>
-                            <constraint firstAttribute="bottom" secondItem="NXr-mf-HiI" secondAttribute="bottom" constant="49" id="kWz-gl-1Wf"/>
+                            <constraint firstItem="N9Z-Se-r3c" firstAttribute="centerX" secondItem="LHd-RB-0Jw" secondAttribute="centerX" type="default" id="RSf-Js-50N"/>
+                            <constraint firstItem="LHd-RB-0Jw" firstAttribute="centerX" secondItem="L4Q-FD-qob" secondAttribute="centerX" type="default" id="fN2-AE-jZl"/>
+                            <constraint firstItem="N9Z-Se-r3c" firstAttribute="top" secondItem="T8r-AT-TqX" secondAttribute="top" constant="51" id="h8Z-pf-D7D"/>
                             <constraint firstItem="N9Z-Se-r3c" firstAttribute="centerX" secondItem="xDl-ql-5DB" secondAttribute="centerX" type="default" id="tbL-5m-R5c"/>
                             <constraint firstItem="xDl-ql-5DB" firstAttribute="top" secondItem="T8r-AT-TqX" secondAttribute="top" constant="20" symbolic="YES" type="default" id="y40-8m-zcS"/>
                         </constraints>
                     </view>
+                    <connections>
+                        <outlet property="highscoresText" destination="LHd-RB-0Jw" id="GhH-lE-Uc7"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="LW0-RR-7be" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="550" y="831"/>
+            <point key="canvasLocation" x="924" y="137"/>
         </scene>
     </scenes>
     <classes>
@@ -197,6 +227,7 @@
             <source key="sourceIdentifier" type="project" relativePath="./Classes/GameViewController.h"/>
             <relationships>
                 <relationship kind="action" name="backButton:"/>
+                <relationship kind="action" name="winGameButton:"/>
                 <relationship kind="outlet" name="timerDisplay" candidateClass="UILabel"/>
             </relationships>
         </class>
@@ -205,6 +236,7 @@
             <relationships>
                 <relationship kind="action" name="backToMenu:"/>
                 <relationship kind="action" name="playAgain:"/>
+                <relationship kind="outlet" name="highscoresText" candidateClass="UITextView"/>
             </relationships>
         </class>
         <class className="NSLayoutConstraint" superclassName="NSObject">

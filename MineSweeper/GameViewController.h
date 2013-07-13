@@ -13,10 +13,12 @@
 
 @property (weak, nonatomic) IBOutlet UILabel *timerDisplay;
 - (IBAction)backButton:(id)sender;
+- (IBAction)winGameButton:(id)sender;
 
 @property NSTimer *timer;
 @property int currentTime, numberOfBombs, safeCellCount;
 @property NSMutableArray *allCellRows, *allCells;
+
 
 - (NSMutableDictionary *) getRange:(Cell *)cell;
 - (void) cellTapped: (id)sender;
