@@ -34,8 +34,8 @@
 {
     // uncovered zone
     defaultStateView = [[UIView alloc] initWithFrame:CGRectMake(0.0f, 0.0f, 30.0f, 30.0f)];
-    [defaultStateView setBackgroundColor:[UIColor blackColor]];
-    [self addSubview:defaultStateView];
+    [defaultStateView setBackgroundColor:[UIColor orangeColor]];
+    [self addSubview:defaultStateView];    
     
     // bomb
     bombView = [[UIView alloc] initWithFrame:CGRectMake(10.0f, 10.0f, 10.0f, 10.0f)];

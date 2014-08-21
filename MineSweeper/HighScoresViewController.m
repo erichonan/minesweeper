@@ -58,12 +58,13 @@
     
     //hardcode username to begin with
     
-    NSURL *baseurl = [NSURL URLWithString:@"http://fair-jigsaw-266.appspot.com"];
+    /*NSURL *baseurl = [NSURL URLWithString:@"http://fair-jigsaw-266.appspot.com"];
+    
     
     AFHTTPClient *httpClient = [[AFHTTPClient alloc] initWithBaseURL:baseurl];
     [httpClient registerHTTPOperationClass:[AFJSONRequestOperation class]];
     [httpClient setDefaultHeader:@"Accept" value:@"application/json"];
-    
+    */
     NSDictionary *params = [NSDictionary dictionaryWithObjectsAndKeys:
                             username, @"username",
                             [notification object], @"time",
