@@ -25,9 +25,17 @@ class ScoreBoard(webapp2.RequestHandler):
 		scores_query = Score.query()
 		scores = scores_query.fetch(10)
 
+		#self.response.write(scores);
+
+		array_of_scores = [];
 		for score in scores:
-			convertedScore = int(score.score)
-			self.response.write('<p>user:%s :: score: %s</p>' % (score.username, convertedScore))
+			#self.response.write('<p>user:%s :: score: %s</p>' % (score.username, score.score))
+			array_of_scores.append({"username":score.username, "score":score.score});
+
+		self.response.write(len(array_of_scores))
+		json_export = json.dumps(array_of_scores)
+
+		self.response.write(json_export)
 
 class LogScore(webapp2.RequestHandler):
 	def post(self):
