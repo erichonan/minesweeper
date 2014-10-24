@@ -7,6 +7,7 @@
 //
 
 #import "HighScoresViewController.h"
+#import "GameViewController.h"
 #import "AFNetworking.h"
 
 @interface HighScoresViewController ()
@@ -37,7 +38,8 @@
 }
 
 - (IBAction)playAgain:(id)sender {
-    NSLog(@"Play Again Tapped");
+    // This needs to dispatch a notification to reset the game - it should not be reset before then
+    [[NSNotificationCenter defaultCenter] postNotificationName:@"RESET_GAME" object:nil];
     [self dismissViewControllerAnimated:YES completion:nil];
 }
 
