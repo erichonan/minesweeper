@@ -18,6 +18,9 @@
 
 @synthesize timer, currentTime, timerDisplay, allCellRows, allCells, numberOfBombs, safeCellCount;
 
+#define WinGame 1
+#define LoseGame 2
+
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
@@ -98,7 +101,6 @@
     gameBoard.frame = CGRectMake(40.0f, 110.0f, width, height); //make this dynamic based on board size
     //set gameboard background or border here
     [gameBoard.layer setBackgroundColor: [UIColor blackColor].CGColor];
-    
     [self addBombs:allCellRows];
 }
 
@@ -130,13 +132,7 @@
 
         if(cell.bomb)
         {
-            // when game is lost, display alert
-            
-            //create alert with 2 options (new game, return to home screen)
-            UIAlertView *gameOverAlert = [[UIAlertView alloc] initWithTitle:@"GAME OVER!" message:@"You tapped a bomb" delegate:self cancelButtonTitle:@"Back To Menu" otherButtonTitles:@"Play Again!", nil];
-            [gameOverAlert show];
-            //stop timer here
-            [timer invalidate];
+            [self loseGame];
         }
         else //cell is not a bomb
         {
@@ -155,13 +151,32 @@
 - (void) winGame
 {
     NSLog(@"win game called");
-    [self performSegueWithIdentifier:@"highScoresSegue" sender:self]; // display high scores
+    //display end game allert instead of displaying the highscore screen immediately
+    
+    //create alert with 2 options (view high scores, return to home screen)
+    UIAlertView *gameOverAlert = [[UIAlertView alloc] initWithTitle:@"You win!" message:@"Well done." delegate:self cancelButtonTitle:@"Back To Menu" otherButtonTitles:@"View high scores", nil];
+    gameOverAlert.tag = WinGame;
+    [gameOverAlert show];
+    //stop timer here
+    [timer invalidate];
     
     //now pass along a notification
     NSNotification *newHighScore = [NSNotification notificationWithName:@"HIGHSCORE" object: [NSNumber numberWithInt:currentTime]];
     [[NSNotificationCenter defaultCenter] postNotification:newHighScore];
     
-    [self resetGame];
+    //[self resetGame];
+}
+
+- (void) loseGame
+{
+    // when game is lost, display alert
+    
+    //create alert with 2 options (new game, return to home screen)
+    UIAlertView *gameOverAlert = [[UIAlertView alloc] initWithTitle:@"GAME OVER!" message:@"You tapped a bomb" delegate:self cancelButtonTitle:@"Back To Menu" otherButtonTitles:@"Play Again!", nil];
+    gameOverAlert.tag = LoseGame;
+    [gameOverAlert show];
+    //stop timer here
+    [timer invalidate];
 }
 
 - (void) alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
@@ -172,7 +187,13 @@
     }
     else if (buttonIndex == 1) // play again
     {
-        [self resetGame];
+        if (alertView.tag == WinGame)
+        {
+            NSLog(@"win");
+            [self performSegueWithIdentifier:@"highScoresSegue" sender:self]; // display high scores
+        } else {
+            [self resetGame];
+        }
     }
 }
 

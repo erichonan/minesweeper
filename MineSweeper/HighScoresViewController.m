@@ -74,7 +74,7 @@
 {
     
     NSLog(@"displayHighScores called");
-    
+    /*
 
     AFHTTPClient *httpClient = [[AFHTTPClient alloc] initWithBaseURL:[NSURL URLWithString:@"http://fair-jigsaw-266.appspot.com"]];
     [httpClient registerHTTPOperationClass:[AFJSONRequestOperation class]];
@@ -110,13 +110,14 @@
                                                                                         }];
     [operation start];
     [operation waitUntilFinished];
+     */
     
 }
 
 - (void)addHighScore
 {
     NSLog(@"addHighScore called");
-    
+    /*
     //connect to database and add time here
     
     //hardcode username to begin with
@@ -126,7 +127,7 @@
     AFHTTPClient *httpClient = [[AFHTTPClient alloc] initWithBaseURL:baseurl];
     [httpClient registerHTTPOperationClass:[AFJSONRequestOperation class]];
     [httpClient setDefaultHeader:@"Accept" value:@"application/json"];
-    */
+
     NSDictionary *params = [NSDictionary dictionaryWithObjectsAndKeys:
                             nameEntryField.text, @"username",
                             [NSString stringWithFormat:@"%i", userScore], @"time",
@@ -152,6 +153,7 @@
     
     [operation start];
     [operation waitUntilFinished];
+     */
 
 }
 
