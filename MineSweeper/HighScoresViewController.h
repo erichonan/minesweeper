@@ -8,10 +8,13 @@
 
 #import <UIKit/UIKit.h>
 
-@interface HighScoresViewController : UIViewController
+@interface HighScoresViewController : UIViewController <UITextFieldDelegate>
 - (IBAction)playAgain:(id)sender;
 - (IBAction)backToMenu:(id)sender;
+- (IBAction)submitScore:(id)sender;
+- (BOOL)textFieldShouldReturn:(UITextField *)textField;
 
-@property (weak, nonatomic) IBOutlet UITextView *highscoresText;
-
+@property (weak, nonatomic) IBOutlet UITextView *highscoresTextarea;
+@property (weak, nonatomic) IBOutlet UITextField *nameEntryField;
+@property int userScore;
 @end

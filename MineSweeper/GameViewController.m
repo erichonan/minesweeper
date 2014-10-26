@@ -96,7 +96,7 @@
     float height = width;
     gameBoard.frame = CGRectMake(40.0f, 110.0f, width, height); //make this dynamic based on board size
     //set gameboard background or border here
-    [gameBoard.layer setBackgroundColor: [UIColor redColor].CGColor];
+    [gameBoard.layer setBackgroundColor: [UIColor blackColor].CGColor];
     
     [self addBombs:allCellRows];
 }
@@ -108,9 +108,7 @@
     for (int i = numberOfBombs; i > 0; i--)
     {
         //get random int
-        NSLog(@"adding bomb");
         int r = arc4random() % [bombSelectArray count];
-        NSLog(@"r = %i", r);
         Cell *bombCell = [allCells objectAtIndex: r];
         bombCell.bomb = true;
         [bombSelectArray removeObjectAtIndex:r]; //remove this cell so that it doesn't get added again
@@ -153,11 +151,12 @@
 
 - (void) winGame
 {
+    NSLog(@"win game called");
     [self performSegueWithIdentifier:@"highScoresSegue" sender:self]; // display high scores
-    //now pass along a notification
-    NSNotification *newHighScore = [NSNotification notificationWithName:@"HIGHSCORE" object:timerDisplay.text];
-    [[NSNotificationCenter defaultCenter] postNotification:newHighScore];
     
+    //now pass along a notification
+    NSNotification *newHighScore = [NSNotification notificationWithName:@"HIGHSCORE" object: [NSNumber numberWithInt:currentTime]];
+    [[NSNotificationCenter defaultCenter] postNotification:newHighScore];
     
     [self resetGame];
 }
@@ -233,10 +232,8 @@
 }
 
 - (IBAction)winGameButton:(id)sender {
-    [self performSegueWithIdentifier:@"highScoresSegue" sender:self]; // display high scores
+    //[self performSegueWithIdentifier:@"highScoresSegue" sender:self]; // display high scores
     //now pass along a notification
-    NSNotification *newHighScore = [NSNotification notificationWithName:@"HIGHSCORE" object:timerDisplay.text];
-    [[NSNotificationCenter defaultCenter] postNotification:newHighScore];
     [self winGame];
 }
 
@@ -287,7 +284,7 @@
 - (void) timerTick
 {
     currentTime++;
-    timerDisplay.text = [NSString stringWithFormat:@"time: %.2f", (float)currentTime / 100];
+    timerDisplay.text = [NSString stringWithFormat:@"%.2f", (float)currentTime / 100];
 }
 
 - (void) resetGame

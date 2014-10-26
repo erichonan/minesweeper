@@ -2,6 +2,7 @@ import logging
 from google.appengine.ext import ndb
 import json
 import webapp2
+import operator
 
 
 # This script just needs to accept two values:
@@ -52,15 +53,18 @@ class MainPage(webapp2.RequestHandler):
 
 	def post(self):
 		logging.info('MainPage POST function called')
-
+		self.response.headers["Content-Type"] = "application/json"
 		#highscore = HighScore(parent=scoreboard_key(scoreboard_name))
 		highscore = HighScore()
 		highscore.playerName = self.request.get('username') #HC_USER #self.request.get('content')
 		highscore.score = self.request.get('time')
 		highscore.put()
 
-		self.response.write("playerName = %s and score = %s" % (highscore.playerName, highscore.score))
-
+		#self.response.write("playerName = %s and score = %s" % (highscore.playerName, highscore.score))
+		obj = {
+			"status":"success"
+		}
+		self.response.out.write(json.dumps(obj))
 
 class GetScores(webapp2.RequestHandler):
 
@@ -69,10 +73,13 @@ class GetScores(webapp2.RequestHandler):
 		#first print out a set of bogus scores
 		#write first score in first field
 
-		scores_query = HighScore.query().order(HighScore.score)
+		scores_query = HighScore.query() #.order_by(-HighScore.score)
 		highscores = scores_query.fetch(10)
+		highscores = Highscores.objects.order_by('-score')
+		self.response.write(len(highscores))
 
 		# I should be able to find a better way to encode JSON
+		"""
 		results = "["
 
 		for i, highScore in enumerate(highscores):
@@ -82,9 +89,15 @@ class GetScores(webapp2.RequestHandler):
 				 logging.info("i = %i" % i)
 
 		results = results + "]"
+"""
+		highscoresJSON = json.dumps(highscores[0].to_dict())
+		self.response.write(highscoresJSON)
+		
+		self.response.headers["Content-Type"] = "application/json"
+		
+		#self.response.write(results)
 
-		#highscoresJSON = json.dumps(highscores[0].to_dict())
-		self.response.write(results)
+		self.response.write(highscores);
 
 
 		#eventually return array of scores
