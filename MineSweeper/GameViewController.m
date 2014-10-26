@@ -35,6 +35,7 @@
     [self newGameWithDifficulty: @"MEDIUM"]; //TO DO: Add difficulty functionality
     
     [[NSNotificationCenter defaultCenter ] addObserver:self selector:@selector(backToMenu) name:@"RETURN_TO_MENU" object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(resetGame) name:@"RESET_GAME" object:nil];
 }
 
 - (void)didReceiveMemoryWarning
@@ -134,6 +135,8 @@
             //create alert with 2 options (new game, return to home screen)
             UIAlertView *gameOverAlert = [[UIAlertView alloc] initWithTitle:@"GAME OVER!" message:@"You tapped a bomb" delegate:self cancelButtonTitle:@"Back To Menu" otherButtonTitles:@"Play Again!", nil];
             [gameOverAlert show];
+            //stop timer here
+            [timer invalidate];
         }
         else //cell is not a bomb
         {
@@ -289,6 +292,7 @@
 
 - (void) resetGame
 {
+    NSLog(@"reset game");
     [allCellRows removeAllObjects];
     
     for(int i = 0; i < [allCells count]; i++)
@@ -297,7 +301,7 @@
         [cell removeFromSuperview];
         cell = nil;
     }
-
+    
     [timer invalidate];
     timerDisplay.text = @"time: 0";
     currentTime = 0;
