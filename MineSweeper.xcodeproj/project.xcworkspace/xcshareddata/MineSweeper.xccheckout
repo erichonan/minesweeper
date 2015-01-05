@@ -14,7 +14,7 @@
 		<string>https://github.com/erichonan/minesweeper.git</string>
 	</dict>
 	<key>IDESourceControlProjectPath</key>
-	<string>MineSweeper.xcodeproj/project.xcworkspace</string>
+	<string>MineSweeper.xcodeproj</string>
 	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
 	<dict>
 		<key>0BF7FADC515B3FF6778608C214610B3B2604494E</key>
@@ -34,7 +34,7 @@
 			<key>IDESourceControlWCCIdentifierKey</key>
 			<string>0BF7FADC515B3FF6778608C214610B3B2604494E</string>
 			<key>IDESourceControlWCCName</key>
-			<string>minesweeper</string>
+			<string>MineSweeper</string>
 		</dict>
 	</array>
 </dict>

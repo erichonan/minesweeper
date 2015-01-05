@@ -118,6 +118,18 @@
     }
 }
 
+- (void)cellHeld: (UIGestureRecognizer *)gestureRecognizer
+{
+    // if cell is not revealed
+    if(true)
+    {
+        if (gestureRecognizer.state == UIGestureRecognizerStateBegan) {
+            Cell *cell = (Cell *)gestureRecognizer.view;
+            [cell flagCell];
+        }
+    }
+}
+
 - (void)cellTapped: (UIGestureRecognizer *)gestureRecognizer
 {
     Cell *cell = (Cell *)gestureRecognizer.view;
@@ -157,12 +169,21 @@
     UIAlertView *gameOverAlert = [[UIAlertView alloc] initWithTitle:@"You win!" message:@"Well done." delegate:self cancelButtonTitle:@"Back To Menu" otherButtonTitles:@"View high scores", nil];
     gameOverAlert.tag = WinGame;
     [gameOverAlert show];
+    //store high score now
+    NSString *newHighscore = [NSString stringWithFormat:@"%.2f", (float)currentTime / 100];
     //stop timer here
     [timer invalidate];
     
-    //now pass along a notification
-    NSNotification *newHighScore = [NSNotification notificationWithName:@"HIGHSCORE" object: [NSNumber numberWithInt:currentTime]];
-    [[NSNotificationCenter defaultCenter] postNotification:newHighScore];
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    NSMutableArray *highscores = [[NSMutableArray alloc] init];
+    if (!highscores) {
+        //highscores don't exist, create
+        highscores = [[NSMutableArray alloc] initWithObjects:newHighscore, nil];
+    } else {
+        highscores = [NSMutableArray arrayWithArray: [defaults arrayForKey:@"highscores"]];
+        [highscores addObject:newHighscore];
+    }
+    [defaults setObject:highscores forKey:@"highscores"];
     
     //[self resetGame];
 }
@@ -194,14 +215,6 @@
         } else {
             [self resetGame];
         }
-    }
-}
-
-- (void)cellHeld: (UIGestureRecognizer *)gestureRecognizer
-{
-    if (gestureRecognizer.state == UIGestureRecognizerStateBegan) {
-        Cell *cell = (Cell *)gestureRecognizer.view;
-        [cell flagCell];
     }
 }
 

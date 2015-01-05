@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="6245" systemVersion="13E28" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" initialViewController="2">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="6245" systemVersion="14B25" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" initialViewController="2">
     <dependencies>
+        <deployment defaultVersion="1792" identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6238"/>
     </dependencies>
     <scenes>
@@ -34,6 +35,13 @@
                                     <segue destination="XqS-Rc-kI4" kind="modal" id="cMf-A4-MHr"/>
                                 </connections>
                             </button>
+                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="41v-6D-laX">
+                                <rect key="frame" x="40" y="212" width="240" height="294"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <string key="text">Goal: discover tiles containing bombs. Start by tapping a tile. If the tile contains a bomb the game will end. If the tile contains no bomb, it will display a number which indicates how many bombs are located in the adjacent tiles. If you reveal a tile and it displays 0, it is safe to remove all surrounding bombs.</string>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                            </textView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                         <constraints>
@@ -168,14 +176,14 @@
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
-                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="You Win!" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="xDl-ql-5DB">
+                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" ambiguous="YES" misplaced="YES" text="You Win!" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="xDl-ql-5DB">
                                 <rect key="frame" x="127" y="20" width="67" height="21"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="L4Q-FD-qob">
-                                <rect key="frame" x="124" y="454" width="73" height="30"/>
+                                <rect key="frame" x="124" y="479" width="73" height="30"/>
                                 <state key="normal" title="Play Again">
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
@@ -192,22 +200,12 @@
                                     <action selector="backToMenu:" destination="SBb-aq-CRD" eventType="touchUpInside" id="FVM-6q-4Pd"/>
                                 </connections>
                             </button>
-                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Fastest Times" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="N9Z-Se-r3c">
+                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" ambiguous="YES" misplaced="YES" text="Fastest Times" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="N9Z-Se-r3c">
                                 <rect key="frame" x="107" y="51" width="107" height="21"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="LHd-RB-0Jw">
-                                <rect key="frame" x="20" y="80" width="280" height="258"/>
-                                <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="189" id="zGg-cR-l0l"/>
-                                </constraints>
-                                <string key="text">Lorem ipsum dolor sit er elit lamet, consectetaur cillium adipisicing pecu, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Nam liber te conscient to factor tum poen legum odioque civiuda.</string>
-                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
-                            </textView>
                             <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="wKg-rq-Ffc">
                                 <constraints>
                                     <constraint firstAttribute="width" constant="146" id="vdc-dt-93f"/>
@@ -231,16 +229,20 @@
                                     <action selector="submitScore:" destination="SBb-aq-CRD" eventType="touchUpInside" id="6dJ-KN-hVz"/>
                                 </connections>
                             </button>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="dNU-ps-dWF">
+                                <rect key="frame" x="16" y="80" width="288" height="302"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <connections>
+                                    <outlet property="dataSource" destination="SBb-aq-CRD" id="cPt-13-chh"/>
+                                    <outlet property="delegate" destination="SBb-aq-CRD" id="r4K-As-w1z"/>
+                                </connections>
+                            </tableView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstAttribute="bottom" secondItem="0cZ-nK-zXe" secondAttribute="bottom" constant="87" id="3Cu-aV-SxG"/>
-                            <constraint firstAttribute="trailing" secondItem="LHd-RB-0Jw" secondAttribute="trailing" constant="20" symbolic="YES" id="9Mj-TB-Qfm"/>
-                            <constraint firstItem="LHd-RB-0Jw" firstAttribute="top" secondItem="N9Z-Se-r3c" secondAttribute="bottom" constant="8" symbolic="YES" id="BRf-mz-1mp"/>
-                            <constraint firstItem="LHd-RB-0Jw" firstAttribute="leading" secondItem="T8r-AT-TqX" secondAttribute="leading" constant="20" symbolic="YES" id="G6m-gA-Yga"/>
                             <constraint firstAttribute="trailing" secondItem="0cZ-nK-zXe" secondAttribute="trailing" constant="20" symbolic="YES" id="HYR-kJ-bUB"/>
                             <constraint firstItem="0cZ-nK-zXe" firstAttribute="baseline" secondItem="wKg-rq-Ffc" secondAttribute="baseline" id="P1Z-Dg-bEg"/>
-                            <constraint firstItem="N9Z-Se-r3c" firstAttribute="centerX" secondItem="LHd-RB-0Jw" secondAttribute="centerX" id="RSf-Js-50N"/>
                             <constraint firstItem="wKg-rq-Ffc" firstAttribute="leading" secondItem="T8r-AT-TqX" secondAttribute="leading" constant="20" symbolic="YES" id="WNo-QA-Oi9"/>
                             <constraint firstItem="N9Z-Se-r3c" firstAttribute="top" secondItem="T8r-AT-TqX" secondAttribute="top" constant="51" id="h8Z-pf-D7D"/>
                             <constraint firstItem="NXr-mf-HiI" firstAttribute="leading" secondItem="T8r-AT-TqX" secondAttribute="leading" constant="20" symbolic="YES" id="iRN-y5-erN"/>
@@ -252,7 +254,6 @@
                         </constraints>
                     </view>
                     <connections>
-                        <outlet property="highscoresTextarea" destination="LHd-RB-0Jw" id="Xjp-0U-Sx4"/>
                         <outlet property="nameEntryField" destination="wKg-rq-Ffc" id="AOy-Cv-lfb"/>
                     </connections>
                 </viewController>

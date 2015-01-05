@@ -16,7 +16,7 @@
 
 @implementation HighScoresViewController
 
-@synthesize highscoresTextarea, nameEntryField, userScore;
+@synthesize highscoresTextarea, nameEntryField, userScore, highscores;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -31,6 +31,8 @@
 {
     [super viewDidLoad];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(gameWon:) name:@"HIGHSCORE" object:nil];
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    highscores = [NSArray arrayWithArray:[defaults arrayForKey:@"highscores"]];
 }
 
 - (void)didReceiveMemoryWarning
@@ -74,87 +76,46 @@
 {
     
     NSLog(@"displayHighScores called");
-    /*
 
-    AFHTTPClient *httpClient = [[AFHTTPClient alloc] initWithBaseURL:[NSURL URLWithString:@"http://fair-jigsaw-266.appspot.com"]];
-    [httpClient registerHTTPOperationClass:[AFJSONRequestOperation class]];
-    // not sure if this part is necessary
-    // [httpClient setDefaultHeader:@"Accept" value:@"application/json"];
-    
-    NSMutableURLRequest *request = [httpClient requestWithMethod:@"GET" path:@"/getScores" parameters:nil];
-    
-    AFJSONRequestOperation *operation = [AFJSONRequestOperation
-                                         JSONRequestOperationWithRequest:request
-                                                                                        success:^(NSURLRequest *request, NSHTTPURLResponse *response, id JSON) {
-                                                                                            
-                                                                                            
-                                                                                            NSArray *tenScores = [NSArray arrayWithArray:JSON];
-                                                                                            
-                                                                                            NSMutableString *scoresAsText = [[NSMutableString alloc] init];
-                                                                                            
-                                                                                            for(int i = 0; i < [tenScores count]; i++)
-                                                                                            {
-                                                                                                NSString *uname = [[tenScores objectAtIndex:i] objectForKey:@"playerName"];
-                                                                                                int uscore = [[[tenScores objectAtIndex:i] objectForKey:@"score"] integerValue];
-                                                                                                [scoresAsText appendString: [NSString stringWithFormat:@"%@ : %.2f \n", uname, (float)uscore / 100]];
-                                                                                            }
-                                                                                            
-                                                                                            NSLog(@"scoresAsText = %@", scoresAsText);
-                                                                                            highscoresTextarea.text = scoresAsText;
-                                                                                            
-                                                                                        }
-                                                                                        failure:^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error, id JSON) {
-                                                                                            NSLog(@"FAILURE!");
-                                                                                            NSLog(@"error message: %@", error);
-                                                                                            NSLog(@"JSON = %@", JSON);
-                                                                                        }];
-    [operation start];
-    [operation waitUntilFinished];
-     */
     
 }
 
 - (void)addHighScore
 {
     NSLog(@"addHighScore called");
-    /*
-    //connect to database and add time here
-    
-    //hardcode username to begin with
-    
-    NSURL *baseurl = [NSURL URLWithString:@"http://fair-jigsaw-266.appspot.com"];
-    
-    AFHTTPClient *httpClient = [[AFHTTPClient alloc] initWithBaseURL:baseurl];
-    [httpClient registerHTTPOperationClass:[AFJSONRequestOperation class]];
-    [httpClient setDefaultHeader:@"Accept" value:@"application/json"];
+}
 
-    NSDictionary *params = [NSDictionary dictionaryWithObjectsAndKeys:
-                            nameEntryField.text, @"username",
-                            [NSString stringWithFormat:@"%i", userScore], @"time",
-                            nil];
-    
-    NSMutableURLRequest *request = [httpClient requestWithMethod:@"POST" path:@"/" parameters:params];
-    //create an alert
-    UIAlertView *highscoreFeedback = [[UIAlertView alloc] initWithTitle:@"highscore feedback" message:@"success!" delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
-    
-    AFJSONRequestOperation *operation = [AFJSONRequestOperation JSONRequestOperationWithRequest:request
-                                                                                        success:^(NSURLRequest *request, NSHTTPURLResponse *response, id JSON) {
-                                                                                            
-                                                                                            NSDictionary *scoreResults = [NSDictionary dictionaryWithDictionary:params];
-                                                                                            NSLog(@"gradeResults from GradeViewController: %@", scoreResults);
-                                                                                            
-                                                                                        } failure:^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error, id JSON) {
-                                                                                            highscoreFeedback.message = [NSString stringWithFormat: @"%@", error];
-                                                                                            [highscoreFeedback show];
-                                                                                            NSLog(@"failure");
-                                                                                            NSLog(@"error message: %@", error);
-                                                                                            NSLog(@"JSON = %@", JSON);
-                                                                                        }];
-    
-    [operation start];
-    [operation waitUntilFinished];
-     */
+-(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
+{
+    return 10;
+}
 
+- (void)tableView:(UITableView *)tableView didDeselectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    NSLog(@"some cell selected");
+}
+
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    static NSString *MyIdentifier = @"MyIdentifier";
+    
+    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:MyIdentifier];
+    
+    if(cell == nil)
+    {
+        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:MyIdentifier];
+    }
+    
+    cell.textLabel.text = [highscores objectAtIndex:indexPath.row];
+    NSLog(@"%lu", (unsigned long)[highscores count]);
+    NSLog(@"detail label text: %@", cell.textLabel.text);
+    
+    return cell;
+}
+
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    return 50;
 }
 
 
