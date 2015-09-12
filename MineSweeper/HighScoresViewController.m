@@ -76,7 +76,6 @@
 {
     
     NSLog(@"displayHighScores called");
-
     
 }
 
@@ -87,7 +86,7 @@
 
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return 10;
+    return [highscores count];
 }
 
 - (void)tableView:(UITableView *)tableView didDeselectRowAtIndexPath:(NSIndexPath *)indexPath
