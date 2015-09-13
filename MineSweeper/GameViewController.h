@@ -16,13 +16,15 @@
 - (IBAction)winGameButton:(id)sender;
 
 @property NSTimer *timer;
-@property int currentTime, numberOfBombs, safeCellCount;
+@property int currentTime, numberOfBombs, cellCount, safeCellCount;
 @property NSMutableArray *allCellRows, *allCells;
+@property BOOL firstTap;
 
 
 - (NSMutableDictionary *) getRange:(Cell *)cell;
 - (void) cellTapped: (id)sender;
 - (void) newGameWithDifficulty: (NSString *)difficulty;
 - (void) buildGameBoard;
+- (void)revealAllCells:(NSMutableArray *)cells;
 - (void) resetGame;
 @end

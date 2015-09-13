@@ -1,4 +1,4 @@
-//
+    //
 //  GameFieldViewController.m
 //  MineSweeper
 //
@@ -16,7 +16,7 @@
 
 @implementation GameViewController
 
-@synthesize timer, currentTime, timerDisplay, allCellRows, allCells, numberOfBombs, safeCellCount;
+@synthesize timer, currentTime, timerDisplay, allCellRows, allCells, numberOfBombs, safeCellCount, firstTap, cellCount;
 
 #define WinGame 1
 #define LoseGame 2
@@ -32,13 +32,15 @@
 
 - (void)viewDidLoad
 {
-    NSLog(@"view did load");
     [super viewDidLoad];
-    [self buildGameBoard];
+    cellCount = 64;
+    [self buildGameBoard]; //do this after the user clicks
     [self newGameWithDifficulty: @"MEDIUM"]; //TO DO: Add difficulty functionality
     
     [[NSNotificationCenter defaultCenter ] addObserver:self selector:@selector(backToMenu) name:@"RETURN_TO_MENU" object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(resetGame) name:@"RESET_GAME" object:nil];
+    
+    firstTap = true;
 }
 
 - (void)didReceiveMemoryWarning
@@ -63,7 +65,7 @@
     UIView *gameBoard = [[UIView alloc] init];
     [self.view addSubview:gameBoard];
     
-    for(int i=0; i < 64; ++i) //replace 16 with constant
+    for(int i=0; i < cellCount; ++i)
     {
         //Create Cell
         Cell *cell = [[Cell alloc] init];        
@@ -101,21 +103,53 @@
     gameBoard.frame = CGRectMake(40.0f, 110.0f, width, height); //make this dynamic based on board size
     //set gameboard background or border here
     [gameBoard.layer setBackgroundColor: [UIColor blackColor].CGColor];
-    [self addBombs:allCellRows];
+    //[self addBombs:allCellRows]; //I need to call this method after the user clicks rather than before
+}
+
+- (void)revealAllCells:(NSMutableArray *)cells
+{
+    for (int i=0; i<[cells count]; i++) {
+        [[cells objectAtIndex:i] revealCell];
+    }
 }
 
 - (void)addBombs:(NSMutableArray *)allRows
 {
+    // I need to pick 10 unique numbers here
+    //and then loop over each of those unique numbers and remove them from the allBombsArray
     NSMutableArray *bombSelectArray = [allCells mutableCopy];
     numberOfBombs = 10;
-    for (int i = numberOfBombs; i > 0; i--)
+    int bombCount = 0;
+    
+    while (bombCount < numberOfBombs) {
+        int r = arc4random() % [bombSelectArray count];
+        Cell* currentCell = [allCells objectAtIndex:r];
+        if (currentCell.bomb == true) {
+            //skip and try again
+            continue;
+        } else {
+            [currentCell placeBomb];
+            bombCount++;
+        }
+    }
+    [self revealAllCells: allCells];
+
+    //old method of adding bombs below
+    /*
+    NSMutableArray *bombSelectArray = [allCells mutableCopy];
+    numberOfBombs = 10;
+    NSLog(@"number of bombs: %i", numberOfBombs);
+    for (int i = numberOfBombs; i > 0; --i)
     {
         //get random int
         int r = arc4random() % [bombSelectArray count];
+        NSLog(@"r: %i", r);
         Cell *bombCell = [allCells objectAtIndex: r];
-        bombCell.bomb = true;
+        [bombCell placeBomb];
         [bombSelectArray removeObjectAtIndex:r]; //remove this cell so that it doesn't get added again
-    }
+        [self revealAllCells: allCells];
+    }*/
+
 }
 
 - (void)cellHeld: (UIGestureRecognizer *)gestureRecognizer
@@ -133,6 +167,22 @@
 - (void)cellTapped: (UIGestureRecognizer *)gestureRecognizer
 {
     Cell *cell = (Cell *)gestureRecognizer.view;
+ 
+    if (firstTap) {
+        NSLog(@"firstTap: %d", firstTap);
+        //remove tapped cell from allCells array
+        int allCellsCount = [allCells count];
+        Cell *safeCell = [[Cell alloc] init]; // it seems strange that I would initialize a placeholder
+        for (int i = 0; i < allCellsCount; i++) {
+            if ([cell isEqual:[allCells objectAtIndex:i]]) {
+                safeCell = [allCells objectAtIndex:i];
+            }
+        }
+        [allCells removeObject:safeCell];
+        //call addBombs method
+        [self addBombs:allCellRows];
+        firstTap = false;
+    }
     
     if(cell.flagged)
     {
@@ -154,7 +204,7 @@
         }
     }
     
-    if(safeCellCount == (64 - numberOfBombs))     //This checks to see if only bombs are remaining (in which case the game is won)
+    if(safeCellCount == (cellCount - numberOfBombs))     //This checks to see if only bombs are remaining (in which case the game is won)
     {
         [self winGame];
     }
@@ -162,11 +212,12 @@
 
 - (void) winGame
 {
-    NSLog(@"win game called");
-    //display end game allert instead of displaying the highscore screen immediately
-    
     //create alert with 2 options (view high scores, return to home screen)
-    UIAlertView *gameOverAlert = [[UIAlertView alloc] initWithTitle:@"You win!" message:@"Well done." delegate:self cancelButtonTitle:@"Back To Menu" otherButtonTitles:@"View high scores", nil];
+    UIAlertView *gameOverAlert = [[UIAlertView alloc] initWithTitle:@"You win!"
+                                                            message:@"Well done."
+                                                           delegate:self
+                                                  cancelButtonTitle:@"Back To Menu"
+                                                  otherButtonTitles:@"View high scores", nil];
     gameOverAlert.tag = WinGame;
     [gameOverAlert show];
     //store high score now
@@ -341,6 +392,7 @@
     currentTime = 0;
     numberOfBombs = 0;
     safeCellCount = 0;
+    firstTap = true;
 
     [self buildGameBoard];
     [self newGameWithDifficulty:@"MEDIUM"];

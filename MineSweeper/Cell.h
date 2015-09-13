@@ -15,6 +15,8 @@
 @property BOOL flagged, checked, bomb;
 @property int addressX, addressY;
 
+-(void) placeBomb;
+- (void)revealCell;
 - (BOOL)checkCell;
 - (BOOL)flagCell;
 

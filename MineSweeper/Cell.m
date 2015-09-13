@@ -11,13 +11,13 @@
 @implementation Cell
 
 @synthesize defaultStateView,
-            bombView,
             coveredStateView,
+            bomb,
+            bombView,
             flagView,
             flagged,
             checked,
             neighborBombCount,
-            bomb,
             addressX,
             addressY;
 
@@ -43,7 +43,7 @@
     
     // neighbor bomb count label
     neighborBombCount = [[UILabel alloc] initWithFrame:CGRectMake(0.0, 0.0f, 30.0f, 30.0f)];
-    neighborBombCount.text = @"?";
+    //neighborBombCount.text = @"?";
     [self addSubview:neighborBombCount];
 
     // covered zone
@@ -56,6 +56,12 @@
     [flagView setBackgroundColor:[UIColor blueColor]];
 }
 
+-(void) placeBomb   {
+    self.bomb = true;
+    [self addSubview:bombView];
+    [neighborBombCount removeFromSuperview];
+}
+
 - (BOOL)checkCell
 {
     NSLog(@"checking cell");
@@ -63,12 +69,11 @@
         checked = TRUE;
     }
     
-    if (bomb) {
-        [self addSubview:bombView];
-        [neighborBombCount removeFromSuperview];
+    if (bomb) {     //this should end the game.. right?
+        [coveredStateView setAlpha:0.0];
     }
     
-    if (neighborBombCount > 0 && !bomb)
+    if (neighborBombCount > 0 && !bomb) //why is this conditional not used?
     {
         //display bomb count
     }
@@ -91,6 +96,11 @@
         [self addSubview:flagView];
     }
     return flagged;
+}
+
+- (void)revealCell
+{
+    [coveredStateView setAlpha:0.5];
 }
 
 @end
