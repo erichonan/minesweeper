@@ -98,7 +98,7 @@
         }
     }
     
-    float width = 8 * 30 + 7;
+    float width = 8 * 30 + 7; // <-- this smells funny
     float height = width;
     gameBoard.frame = CGRectMake(40.0f, 110.0f, width, height); //make this dynamic based on board size
     //set gameboard background or border here
@@ -132,24 +132,7 @@
             bombCount++;
         }
     }
-    [self revealAllCells: allCells];
-
-    //old method of adding bombs below
-    /*
-    NSMutableArray *bombSelectArray = [allCells mutableCopy];
-    numberOfBombs = 10;
-    NSLog(@"number of bombs: %i", numberOfBombs);
-    for (int i = numberOfBombs; i > 0; --i)
-    {
-        //get random int
-        int r = arc4random() % [bombSelectArray count];
-        NSLog(@"r: %i", r);
-        Cell *bombCell = [allCells objectAtIndex: r];
-        [bombCell placeBomb];
-        [bombSelectArray removeObjectAtIndex:r]; //remove this cell so that it doesn't get added again
-        [self revealAllCells: allCells];
-    }*/
-
+    //[self revealAllCells: allCells];
 }
 
 - (void)cellHeld: (UIGestureRecognizer *)gestureRecognizer
@@ -190,7 +173,12 @@
     }
     else
     {
-        [cell checkCell];
+        if (![cell checked]) {
+            NSLog(@"cell has not been checked");
+            [cell checkCell];
+        } else {
+            NSLog(@"this cell has already been checked");
+        }
 
         if(cell.bomb)
         {
@@ -198,14 +186,19 @@
         }
         else //cell is not a bomb
         {
+            NSLog(@"this should be called for each cell checked");
             int bombCount = [self countNeighboringBombs:cell];
-            cell.neighborBombCount.text = [NSString stringWithFormat:@"%i", bombCount];
+            if (bombCount > 0) {
+                [cell updateNeighborCount:bombCount];
+                //cell.neighborBombCount.text = [NSString stringWithFormat:@"%i", bombCount];
+            }
             safeCellCount++;
         }
     }
     
-    if(safeCellCount == (cellCount - numberOfBombs))     //This checks to see if only bombs are remaining (in which case the game is won)
+    if(safeCellCount == (cellCount - numberOfBombs)) //This checks to see if only bombs are remaining but I don't think it's working right
     {
+        NSLog(@"safeCellCount: %i, cellCount: %i, numberOfBombs: %i", safeCellCount, cellCount, numberOfBombs);
         [self winGame];
     }
 }
@@ -293,6 +286,8 @@
             if(currentCell == cell)
             {
                 NSLog(@"This is the clicked cell address: x=%i - y=%i", currentCell.addressX, currentCell.addressY);
+                [neighborCells removeObject:currentCell]; //why is this added to neighborCells? It is exactly not neighborCells
+            } else {
                 [neighborCells addObject:currentCell];
             }
             
@@ -303,19 +298,29 @@
         }
     }
     
+    NSLog(@"neighborCells count: %i", [neighborCells count]);
+    
+    // EMPTY ALL CELLS THAT ARE ZERO
     // The problem here is that the cell with 0 bombs gets checked again and again
-    /*
     if(bombNumber == 0)
     {
-        NSLog(@"No neighboring bombs - need to check all neighbors");
+        // first, open each cell around the zero. It might be beneficial to do this first and then make it recursive.
         for (int k = 0; k < [neighborCells count]; k++) {
-            NSLog(@"checking neighboring cell (recursive): k = %i", k);
             Cell *cell = [neighborCells objectAtIndex:k];
-            [cell checkCell];
-            [self countNeighboringBombs:cell];
+            if (![cell checked]) {
+                NSLog(@"recursive check. cell unchecked");
+                [cell checkCell];
+                int bombCount = [self countNeighboringBombs:cell];
+                if (bombCount > 0) {
+                   [cell updateNeighborCount:bombCount];
+                    cell.neighborBombCount.text = [NSString stringWithFormat:@"%i", bombCount];
+                }
+                safeCellCount++;
+            } else {
+                NSLog(@"recursive check. cell already checked!");
+            }
         }
-    }*/
-    
+    }
     return bombNumber;
 }
 

@@ -56,10 +56,19 @@
     [flagView setBackgroundColor:[UIColor blueColor]];
 }
 
+-(void) updateNeighborCount: (int) threatCount  {
+    neighborBombCount.text = [NSString stringWithFormat:@"%i", threatCount];
+    //this doesn't make any sense. I need to review the measurements exactly to see what is happening here
+    CGFloat centeredX = neighborBombCount.frame.size.width*0.25;
+    CGFloat centeredY = neighborBombCount.frame.size.height*0.25;
+    NSLog(@"centeredX: %f; centeredY: %f; width: %f; height: %f", centeredX, centeredY, neighborBombCount.frame.size.width, neighborBombCount.frame.size.height);
+    neighborBombCount.frame = CGRectMake(centeredX, centeredY, neighborBombCount.frame.size.width, neighborBombCount.frame.size.height);
+}
+
 -(void) placeBomb   {
     self.bomb = true;
-    [self addSubview:bombView];
-    [neighborBombCount removeFromSuperview];
+    //[self addSubview:bombView];
+    //[neighborBombCount removeFromSuperview];
 }
 
 - (BOOL)checkCell

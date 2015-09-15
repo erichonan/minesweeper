@@ -16,6 +16,7 @@
 @property int addressX, addressY;
 
 -(void) placeBomb;
+-(void) updateNeighborCount:(int) threatCount;
 - (void)revealCell;
 - (BOOL)checkCell;
 - (BOOL)flagCell;

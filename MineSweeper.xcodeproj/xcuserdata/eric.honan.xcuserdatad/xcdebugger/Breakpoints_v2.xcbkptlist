@@ -26,12 +26,12 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "MineSweeper/GameViewController.m"
-            timestampString = "463863328.315772"
+            timestampString = "463959688.223642"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "149"
-            endingLineNumber = "149"
-            landmarkName = "-addBombs:"
+            startingLineNumber = "320"
+            endingLineNumber = "320"
+            landmarkName = "-countNeighboringBombs:"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
